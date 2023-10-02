@@ -1,0 +1,7 @@
+test:
+  stage: test
+  tags: [linux]
+  script: ./QtExCore-Test --gtest_output=xml --platform linuxfb
+  artifacts:
+    reports:
+      junit: test_detail.xml
