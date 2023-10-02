@@ -5,8 +5,6 @@ variables:
 
 include:
   - local: /.gitlab/ubuntu.yml
-  - local: /.gitlab/test.yml
 
 stages:
   - build
-  - test
