@@ -26,14 +26,30 @@ endif()
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 
+if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
+    find_package(GTest REQUIRED)
+    enable_testing()
+endif()
+
+find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt5 REQUIRED COMPONENTS Core Quick Location Positioning Network)
+
 add_subdirectory(libs/core)
 add_subdirectory(libs/geo)
 add_subdirectory(libs/elevation)
 add_subdirectory(libs/scenegraph)
 #add_subdirectory(libs/application)
 #add_subdirectory(libs/networking)
+set(QTEX_INCLUDES
+    include/QtEx/QtEx
+)
 
-add_library(${PROJECT_NAME} STATIC include/QtEx/QtEx)
+set(QTEX_TESTS
+
+)
+
+include_directories(include)
+add_library(${PROJECT_NAME} STATIC ${QTEX_INCLUDES})
 target_link_libraries(${PROJECT_NAME} PUBLIC
     QtExCore
     QtExGeo
@@ -42,5 +58,24 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
     #QtExApplication
     #QtExNetworking
 )
+target_include_directories(${PROJECT_NAME} PUBLIC include)
 
-message(STATUS "[QtEx] Loaded")
+message(STATUS "[QtEx] Tests disabled")
+if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
+    message(WARNING "[QtEx] Tests enabled")
+    add_compile_definitions(QTEX_CORE_ENABLE_TESTS)
+    add_executable(${PROJECT_NAME}-Test ${QTEX_INCLUDES} ${QTEX_TESTS})
+    target_link_libraries(${PROJECT_NAME}-Test
+      Qt5::Network
+      Qt5::Positioning
+      Qt5::Location
+      Qt5::Quick
+      Qt5::Core
+      GTest::GTest
+      QtExCore
+      QtExGeo
+      QtExElevation
+      QtExScenegraph
+    )
+endif()
+
