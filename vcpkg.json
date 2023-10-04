@@ -1,9 +1,10 @@
 {
   "name" : "qtex",
   "version-string" : "1.0.0",
-  "builtin-baseline" : "db0473513e5dc73ec6b6f431ff05d2f398eea042",
   "dependencies" : [ {
-    "name" : "gtest",
-    "version>=" : "1.13.0"
-  } ]
+      "name" : "gtest"
+    },
+    {
+      "name" : "gdal"
+    }]
 }

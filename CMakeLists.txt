@@ -7,6 +7,17 @@ project(QtEx
   LANGUAGES C CXX
 )
 
+if(WIN32)
+    include(FetchContent)
+    FetchContent_Declare(
+      googletest
+      URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+    )
+    # For Windows: Prevent overriding the parent project's compiler/linker settings
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+endif()
+
 if(NOT CMAKE_C_STANDARD)
     set(CMAKE_C_STANDARD 17)
     set(CMAKE_C_STANDARD_REQUIRED OFF)
@@ -44,10 +55,6 @@ set(QTEX_INCLUDES
     include/QtEx/QtEx
 )
 
-set(QTEX_TESTS
-
-)
-
 include_directories(include)
 add_library(${PROJECT_NAME} STATIC ${QTEX_INCLUDES})
 target_link_libraries(${PROJECT_NAME} PUBLIC
@@ -62,20 +69,21 @@ target_include_directories(${PROJECT_NAME} PUBLIC include)
 
 message(STATUS "[QtEx] Tests disabled")
 if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
-    message(WARNING "[QtEx] Tests enabled")
+    file(GLOB_RECURSE QTEX_TESTS tests/*)
+    message(NOTICE "[QtEx] Tests enabled")
     add_compile_definitions(QTEX_CORE_ENABLE_TESTS)
     add_executable(${PROJECT_NAME}-Test ${QTEX_INCLUDES} ${QTEX_TESTS})
-    target_link_libraries(${PROJECT_NAME}-Test
+    target_link_libraries(${PROJECT_NAME}-Test PRIVATE
+      GTest::GTest
       Qt5::Network
       Qt5::Positioning
       Qt5::Location
       Qt5::Quick
       Qt5::Core
-      GTest::GTest
       QtExCore
       QtExGeo
       QtExElevation
       QtExScenegraph
-    )
+      )
 endif()
 
