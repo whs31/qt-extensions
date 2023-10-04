@@ -62,9 +62,12 @@ set(QTEX_CORE_INCLUDE
 
 set(SRC ${QTEX_CORE} ${QTEX_CORE_INCLUDE})
 add_library(${PROJECT_NAME} STATIC ${SRC})
-target_link_libraries(${PROJECT_NAME} PUBLIC
+target_link_libraries(${PROJECT_NAME}
+  PRIVATE
     Qt5::Core
     Qt5::Quick
+
+  PUBLIC
     expected
     range-v3
 )
