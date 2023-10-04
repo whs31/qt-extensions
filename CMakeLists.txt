@@ -84,6 +84,6 @@ if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
       QtExGeo
       QtExElevation
       QtExScenegraph
-      )
+    )
 endif()
 
