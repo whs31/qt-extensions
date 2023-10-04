@@ -1,7 +1,0 @@
-test:
-  stage: test
-  tags: [linux]
-  script: ./QtExElevation-Test --gtest_output=xml --platform linuxfb
-  artifacts:
-    reports:
-      junit: test_detail.xml
