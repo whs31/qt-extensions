@@ -4,9 +4,6 @@
 [submodule "libs/scenegraph"]
 	path = libs/scenegraph
 	url = ../qtex-scenegraph
-[submodule "libs/geo"]
-	path = libs/geo
-	url = ../qtex-geo
 [submodule "libs/elevation"]
 	path = libs/elevation
 	url = ../qtex-elevation
