@@ -32,7 +32,6 @@ namespace QtEx
   int16_t TileStorage::elevation(const double latitude, const double longitude) const
   {
     TileKey key(latitude, longitude);
-    auto b = m_storage.at(key).get();
     if(not m_storage.count(key) or m_storage.at(key) == nullptr)
       throw std::runtime_error(scope_information_str + "Access to non-created tile (1)");
 

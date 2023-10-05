@@ -18,6 +18,11 @@ class QGeoPolygon;
 
 namespace QtEx
 {
+  enum class PreLoad : uint8_t {
+      True,
+      False
+  };
+
   bool loadTile(int8_t latitude, int16_t longitude);
   bool loadTiles(int8_t minLatitude, int16_t minLongitude, int8_t maxLatitude, int16_t maxLongitude);
   bool loadTiles(const QGeoPath & _path);
