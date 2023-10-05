@@ -7,6 +7,10 @@ project(QtEx
   LANGUAGES C CXX
 )
 
+if(TARGET ${PROJECT_NAME})
+    return()
+endif()
+
 if(WIN32)
     include(FetchContent)
     FetchContent_Declare(
@@ -30,9 +34,7 @@ if(NOT CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_EXTENSIONS OFF)
 endif(NOT CMAKE_CXX_STANDARD)
 
-if(TARGET ${PROJECT_NAME})
-    return()
-endif()
+
 
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
