@@ -10,8 +10,6 @@
 #include <QtExCore/Logging>
 #include "QtExElevation/TileStorage"
 
-constexpr static const float SCAN_STEP = 1.f;
-
 namespace QtEx
 {
   bool loadTile(const int8_t latitude, const int16_t longitude) { return TileStorage::get()->load(latitude, longitude); }
@@ -24,11 +22,10 @@ namespace QtEx
     return ret;
   }
 
-  int16_t elevation(const double latitude, const double longitude)
+  int16_t elevation(const double latitude, const double longitude, PreLoad mode)
   {
     double lat = latitude;
     double lon = longitude;
-
     if (latitude - std::floor(latitude) < 0.00001)
       lat = std::floor(latitude);
     if(std::ceil(latitude) - latitude < 0.00001)
@@ -38,6 +35,9 @@ namespace QtEx
     if(std::ceil(longitude) - longitude < 0.00001)
       lon = std::ceil(longitude);
 
+    if(mode == PreLoad::True) {
+      loadTile(lat, lon);
+    }
     try { return TileStorage::get()->elevation(lat, lon); }
     catch(std::runtime_error& x) { throw x; }
   }
