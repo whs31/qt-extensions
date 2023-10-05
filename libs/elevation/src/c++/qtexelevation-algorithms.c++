@@ -10,7 +10,7 @@
 #include <QtExCore/Logging>
 #include "QtExElevation/TileStorage"
 
-constexpr static const float SCAN_STEP = 0.5f;
+constexpr static const float SCAN_STEP = 1.f;
 
 namespace QtEx
 {
@@ -143,7 +143,7 @@ namespace QtEx
     return ret;
   }
 
-  QGeoPath buildProfileAsGeoPath(const QGeoPath& path)
+  QGeoPath buildProfileAsGeoPath(const QGeoPath& path, float step)
   {
     if(not loadTiles(path))
       return {};
@@ -156,7 +156,7 @@ namespace QtEx
         auto previous = ret.coordinateAt(ret.size() - 1);
         auto azimuth = previous.azimuthTo(point);
         auto Δ = previous.distanceTo(point);
-        float δ = SCAN_STEP;
+        float δ = step;
         auto t = previous;
         while(δ < Δ)
         {
@@ -169,7 +169,7 @@ namespace QtEx
             else ret.addCoordinate(u);
           }
           t = u;
-          δ += SCAN_STEP;
+          δ += step;
         }
       }
       try { point.setAltitude(elevation(point.latitude(), point.longitude())); }

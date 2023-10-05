@@ -25,5 +25,5 @@ namespace QtEx
   int16_t elevation(double latitude, double longitude);
 
   auto buildProfile(const QGeoPath& path, uint8_t discrete = 10) -> vector<pair<uint32_t, int16_t>>;
-  QGeoPath buildProfileAsGeoPath(const QGeoPath& path);
+  QGeoPath buildProfileAsGeoPath(const QGeoPath& path, float step = 1.f);
 } // QtEx
