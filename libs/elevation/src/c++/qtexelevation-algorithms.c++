@@ -4,7 +4,6 @@
 
 #include "qtexelevation-algorithms.h"
 #include <QtCore/QPointF>
-#include <QtPositioning/QGeoCoordinate>
 #include <QtPositioning/QGeoPath>
 #include <QtExCore/Math>
 #include <QtExCore/Logging>
