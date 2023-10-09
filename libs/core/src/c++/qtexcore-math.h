@@ -9,15 +9,11 @@
 namespace QtEx
 {
   template<class T = decimal> constexpr inline T pi = enable_if_decimal<T>(3.141592653589793238462643383279502884L);
-  template<class T = decimal> constexpr inline T euler = enable_if_decimal<T>(2.71828182845904523536028747135266249L);
+  template<class T = decimal> constexpr inline T e = enable_if_decimal<T>(2.71828182845904523536028747135266249L);
   template<class T = decimal> constexpr inline T sqrt2 = enable_if_decimal<T>(1.41421356237309504880168872420969807L);
   template<class T = decimal> constexpr inline T sqrt3 = enable_if_decimal<T>(1.73205080756887729352744634150587236L);
   template<class T = decimal> constexpr inline T sqrt5 = enable_if_decimal<T>(2.23606797749978969640917366873127623L);
   template<class T = decimal> constexpr inline T phi = enable_if_decimal<T>(1.61803398874989484820458683436563811L);
-
-  [[maybe_unused]] constexpr inline decimal π = pi<>;
-  [[maybe_unused]] constexpr inline decimal e = euler<>;
-  [[maybe_unused]] constexpr inline decimal φ = phi<>;
 
   template<class T = decimal, enable_if_decimal_logic<T> = true> constexpr inline T log(T base, T exponent) noexcept;
   template<class T = decimal, enable_if_decimal_logic<T> = true> constexpr inline T log10(T exponent) noexcept;
@@ -75,7 +71,7 @@ namespace QtEx
   template<class T, enable_if_decimal_logic<T>> constexpr inline T log(T base, T exponent) noexcept { return static_cast<T>(std::log(exponent) / std::log(base)); }
   template<class T, enable_if_decimal_logic<T>> constexpr inline T log10(T exponent) noexcept { return log<T>(10, exponent); }
   template<class T, enable_if_decimal_logic<T>> constexpr inline T log2(T exponent) noexcept { return log<T>(2, exponent); }
-  template<class T, enable_if_decimal_logic<T>> constexpr inline T ln(T exponent) noexcept { return log<T>(euler<T>, exponent); }
+  template<class T, enable_if_decimal_logic<T>> constexpr inline T ln(T exponent) noexcept { return log<T>(e<T>, exponent); }
 
   template<typename T> constexpr inline bool compare(T a, T b) noexcept { return a == b; }
   template<> constexpr inline bool compare<float>(float a, float b) noexcept { return (std::abs(a - b) * 100000.f <= std::min(std::abs(a), std::abs(b))); }

@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <memory>
+#include <cstdint>
 #include <utility>
 #include <type_traits>
 #include <QtCore/QtGlobal>
@@ -26,7 +28,7 @@ namespace QtEx
 class QObject;
 class QColor;
 class QVariant;
-#if !defined(QTEX_CORE_MAKE_PUBLIC_ALIAS_FOR_QT_CLASSES)
+#if defined(QTEX_CORE_MAKE_PUBLIC_ALIAS_FOR_QT_CLASSES)
 namespace QtEx {
 #endif
   using String = QString;
@@ -35,16 +37,28 @@ namespace QtEx {
   using Color = QColor;
   using Variant = QVariant;
 
-  template<class T, class E>
-  using Expected = tl::expected<T, E>;
-
-  template<class E>
-  using Unexpected = tl::unexpected<E>;
-
   using namespace tl;
-#if !defined(QTEX_CORE_MAKE_PUBLIC_ALIAS_FOR_QT_CLASSES)
+  using std::unique_ptr;
+  using std::shared_ptr;
+  using std::weak_ptr;
+#if defined(QTEX_CORE_MAKE_PUBLIC_ALIAS_FOR_QT_CLASSES)
 } // QtEx
 #endif
+
+using i8 = int8_t;
+using i16 = int16_t;
+using i32 = int32_t;
+using i64 = int64_t;
+using u8 = uint8_t;
+using u16 = uint16_t;
+using u32 = uint32_t;
+using u64 = uint64_t;
+using usize = size_t;
+using isize = i64;
+using uptr = uintptr_t;
+using iptr = ptrdiff_t;
+using f32 = float;
+using f64 = double;
 
 #if defined(QTEX_CORE_ENABLE_TESTS)
 // if needed

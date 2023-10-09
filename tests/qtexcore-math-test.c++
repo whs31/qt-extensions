@@ -12,7 +12,7 @@ using namespace QtEx;
 
 declare_test_case(Math, Constants)
   pass_if_template_decimal_equal(pi, M_PIf, M_PI)
-  pass_if_template_decimal_equal(euler, M_Ef, M_E)
+  pass_if_template_decimal_equal(e, M_Ef, M_E)
   pass_if_template_decimal_equal(phi, float(1.618033988749894), 1.618033988749894)
   pass_if_template_decimal_equal(sqrt2, M_SQRT2f, M_SQRT2)
   pass_if_template_decimal_equal(sqrt3, float(1.732050807568877293), 1.732050807568877293)
@@ -20,7 +20,7 @@ declare_test_case(Math, Constants)
 end_test_case
 
 declare_test_case(Math, Logarithms)
-  pass_if_floats_equal(ln<float>(euler<float>), 1.f)
+  pass_if_floats_equal(ln<float>(e<float>), 1.f)
   pass_if_floats_equal(ln<float>(10), 2.30258509f)
   pass_if_floats_equal(ln<float>(0.01f), -4.60517019f)
   pass_if_floats_equal(ln<float>(9999), 9.21024037f)
@@ -51,8 +51,8 @@ end_test_case
 declare_test_case(Math, Rounding)
   pass_if_equal(ceil(pi<float>), 4)
   pass_if_equal(floor(pi<float>), 3)
-  pass_if_equal(floor(euler<float>), 2)
-  pass_if_equal(ceil(euler<float>), 3)
+  pass_if_equal(floor(e<float>), 2)
+  pass_if_equal(ceil(e<float>), 3)
 end_test_case
 
 declare_test_case(Math, Absolute)
