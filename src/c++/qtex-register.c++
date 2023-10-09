@@ -11,6 +11,6 @@ namespace QtEx
   void registerTypes(const char* uri, int major, int minor) noexcept
   {
     qmlRegisterModule(uri, major, minor);
-    qmlRegisterSingletonType<QuickUtils>(uri, major, minor, "QtExQuickUtils", QuickUtils::create);
+    qmlRegisterSingletonType<QuickUtils>(uri, major, minor, "QtEx", QuickUtils::create);
   }
 } // QtEx

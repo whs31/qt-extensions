@@ -5,6 +5,7 @@
 #pragma once
 
 #include <QtCore/QObject>
+#include <QtGui/QColor>
 #include <QtQml/qqml.h>
 #include <QtExCore/Global>
 
@@ -15,10 +16,26 @@ namespace QtEx
     Q_OBJECT
 
     public:
+      enum System
+      {
+        Windows,
+        Linux,
+        Mac,
+        Android
+      };
+      Q_ENUM(System)
+
       static auto get() -> QuickUtils*;
       static auto create(QQmlEngine* qml_engine, QJSEngine* js_engine) -> QuickUtils*;
 
-      invokable QString uuid();
+      invokable static QString uuid() ;
+      invokable static int qtVersionMajor();
+      invokable static int qtVersionMinor();
+      invokable static int qtVersionPatch();
+      invokable static QString qtVersion();
+      invokable static int architecture();
+      invokable static QString applicationDirectoryPath();
+      invokable QColor blendColor(const QColor& color, float alpha);
 
     private:
       explicit QuickUtils(Object* parent = nullptr);
