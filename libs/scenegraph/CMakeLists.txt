@@ -35,6 +35,7 @@ include_directories(src/c++ include)
 set(QTEX_SG
     src/c++/qtexsg-scenegraphobject.h                           src/c++/qtexsg-scenegraphobject.c++
     src/c++/qtexsg-scenegraph-utils.h                           src/c++/qtexsg-scenegraph-utils.c++
+    src/c++/qtexsg-quickutils.h                                 src/c++/qtexsg-quickutils.c++
     src/c++/materials/qtexsg-materials-state.h
     src/c++/materials/qtexsg-materials-fadinggradientshader.h   src/c++/materials/qtexsg-materials-fadinggradientshader.c++
     src/c++/materials/qtexsg-materials-radialgradientshader.h   src/c++/materials/qtexsg-materials-radialgradientshader.c++
@@ -44,6 +45,7 @@ set(QTEX_SG
 set(QTEX_SG_INCLUDE
     include/QtExScenegraph/ScenegraphObject
     include/QtExScenegraph/ScenegraphUtils
+    include/QtExScenegraph/QuickUtils
     include/QtExScenegraph/BasicPalette
     include/QtExScenegraph/Materials/State
     include/QtExScenegraph/Materials/FadingGradient

@@ -26,9 +26,9 @@ namespace QtEx
     False
   };
 
-  auto loadTile(int8_t latitude, int16_t longitude) -> bool;
-  auto loadTiles(int8_t minLatitude, int16_t minLongitude, int8_t maxLatitude, int16_t maxLongitude) -> bool;
-  auto loadTiles(const QGeoPath & _path) -> bool;
+  auto loadTile(i8 latitude, i16 longitude) -> bool;
+  auto loadTiles(i8 minLatitude, i16 minLongitude, i8 maxLatitude, i16 maxLongitude) -> bool;
+  auto loadTiles(const QGeoPath& path) -> bool;
 
   auto elevation(f64 latitude, f64 longitude, PreLoad mode = PreLoad::False) -> i16;
 

@@ -55,11 +55,17 @@ add_subdirectory(libs/scenegraph)
 #add_subdirectory(libs/networking)
 set(QTEX_INCLUDES
     include/QtEx/QtEx
+    src/c++/qtex-register.c++
+    src/c++/qtex-register.h
 )
 
-include_directories(include)
+include_directories(include src/c++)
 add_library(${PROJECT_NAME} STATIC ${QTEX_INCLUDES})
-target_link_libraries(${PROJECT_NAME} PUBLIC
+target_link_libraries(${PROJECT_NAME}
+  PRIVATE
+    Qt5::Core
+    Qt5::Quick
+  PUBLIC
     QtExCore
     QtExGeo
     QtExElevation
@@ -67,7 +73,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
     #QtExApplication
     #QtExNetworking
 )
-target_include_directories(${PROJECT_NAME} PUBLIC include)
+target_include_directories(${PROJECT_NAME} PUBLIC include src/c++)
 
 message(STATUS "[QtEx] Tests disabled")
 if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
