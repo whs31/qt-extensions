@@ -11,20 +11,20 @@
 
 namespace QtEx
 {
-  bool loadTile(const int8_t latitude, const int16_t longitude) { return TileStorage::get()->load(latitude, longitude); }
-  bool loadTiles(const int8_t minLatitude, const int16_t minLongitude, const int8_t maxLatitude, const int16_t maxLongitude)
+  auto loadTile(const i8 latitude, const i16 longitude) -> bool { return TileStorage::get()->load(latitude, longitude); }
+  auto loadTiles(const i8 minLatitude, const i16 minLongitude, const i8 maxLatitude, const i16 maxLongitude) -> bool
   {
     bool ret = true;
-    for(int8_t lat = minLatitude; lat <= maxLatitude; ++lat)
-      for(int16_t lon = minLongitude; lon <= maxLongitude; ++lon)
+    for(i8 lat = minLatitude; lat <= maxLatitude; ++lat)
+      for(i16 lon = minLongitude; lon <= maxLongitude; ++lon)
         ret &= loadTile(lat, lon);
     return ret;
   }
 
-  int16_t elevation(const double latitude, const double longitude, PreLoad mode)
+  auto elevation(const f64 latitude, const f64 longitude, PreLoad mode) -> i16
   {
-    double lat = latitude;
-    double lon = longitude;
+    f64 lat = latitude;
+    f64 lon = longitude;
     if (latitude - std::floor(latitude) < 0.00001)
       lat = std::floor(latitude);
     if(std::ceil(latitude) - latitude < 0.00001)
@@ -34,36 +34,33 @@ namespace QtEx
     if(std::ceil(longitude) - longitude < 0.00001)
       lon = std::ceil(longitude);
 
-    if(mode == PreLoad::True) {
-      loadTile(lat, lon);
-    }
+    if(mode == PreLoad::True)
+      loadTile(static_cast<i8>(lat), static_cast<i8>(lon));
+
     try { return TileStorage::get()->elevation(lat, lon); }
     catch(std::runtime_error& x) { throw x; }
   }
 
-  vector<pair<uint32_t, int16_t>> buildProfile(const QGeoPath& path, uint8_t discrete)
+  auto buildProfile(const QGeoPath& path, u8 discrete) -> vector<pair<u32, i16>>
   {
     loadTiles(path);
-    vector<pair<uint32_t, int16_t>> groundProfile;
-
+    vector<pair<u32, i16>> groundProfile;
     if(path.size())
     {
-      double distanceFromStart = 0;
-      QGeoCoordinate prevBasePointGeo = path.coordinateAt(0);
-
-      for(QGeoCoordinate point : path.path())
+      f64 distanceFromStart = 0;
+      GeoCoordinate prevBasePointGeo = path.coordinateAt(0);
+      for(GeoCoordinate point : path.path())
       {
-
         if(not groundProfile.empty())
         {
-          double azimuth = prevBasePointGeo.azimuthTo(point);
-          double distanceFromPrevBasePoint = prevBasePointGeo.distanceTo(point);
+          f64 azimuth = prevBasePointGeo.azimuthTo(point);
+          f64 distanceFromPrevBasePoint = prevBasePointGeo.distanceTo(point);
 
-          double distance = discrete;
-          QGeoCoordinate prevDeltaPointGeo = prevBasePointGeo;
+          f64 distance = discrete;
+          GeoCoordinate prevDeltaPointGeo = prevBasePointGeo;
           while(distance < distanceFromPrevBasePoint)
           {
-            QGeoCoordinate deltaPointGeo = prevBasePointGeo.atDistanceAndAzimuth(distance, azimuth);
+            GeoCoordinate deltaPointGeo = prevBasePointGeo.atDistanceAndAzimuth(distance, azimuth);
             auto a = deltaPointGeo.latitude();
             auto b = deltaPointGeo.longitude();
             auto c = prevDeltaPointGeo.latitude();
@@ -71,13 +68,8 @@ namespace QtEx
             auto e = point.latitude();
             auto f = point.longitude();
 
-
-            try
-            {
-              deltaPointGeo.setAltitude(elevation(deltaPointGeo.latitude(), deltaPointGeo.longitude()));
-            }
-            catch(std::runtime_error& x)
-            {
+            try { deltaPointGeo.setAltitude(elevation(deltaPointGeo.latitude(), deltaPointGeo.longitude())); }
+            catch(std::runtime_error& x) {
               Log::panic() << x.what();
               return {};
             }
@@ -88,24 +80,16 @@ namespace QtEx
               else
                 groundProfile.emplace_back(distance + distanceFromStart, deltaPointGeo.altitude());
             }
-
             prevDeltaPointGeo = deltaPointGeo;
             distance += discrete;
           }
-
           distanceFromStart += distanceFromPrevBasePoint;
         }
-
-        try
-        {
-          point.setAltitude(elevation(point.latitude(), point.longitude()));
-        }
-        catch(std::runtime_error& x)
-        {
+        try { point.setAltitude(elevation(point.latitude(), point.longitude())); }
+        catch(std::runtime_error& x) {
           Log::panic() << x.what();
           return {};
         }
-
         groundProfile.emplace_back(distanceFromStart, point.altitude());
         prevBasePointGeo = point;
       }
@@ -113,40 +97,36 @@ namespace QtEx
     return groundProfile;
   }
 
-  bool loadTiles(const QGeoPath& path)
+  auto loadTiles(const QGeoPath& path) -> bool
   {
     if(path.isEmpty())
       return false;
-
     if(path.size() == 1)
       return loadTile(std::floor(path.coordinateAt(0).latitude()), std::floor(path.coordinateAt(0).longitude()));
 
-    int8_t minLatitude{};
-    int8_t maxLatitude{};
-    int16_t minLongitude{};
-    int16_t maxLongitude{};
+    i8 minLatitude = 0;
+    i8 maxLatitude = 0;
+    i16 minLongitude = 0;
+    i16 maxLongitude = 0;
 
     bool ret = true;
-    for(int i = 1; i < path.size(); ++i)
+    for(usize i = 1; i < path.size(); ++i)
     {
-      QGeoCoordinate coord1 = path.coordinateAt(i - 1);
-      QGeoCoordinate coord2 = path.coordinateAt(i);
-
-      minLatitude = coord1.latitude() < coord2.latitude() ? static_cast<int8_t>(coord1.latitude()) : static_cast<int8_t>(coord2.latitude());
-      maxLatitude = coord1.latitude() < coord2.latitude() ? static_cast<int8_t>(coord2.latitude()) : static_cast<int8_t>(coord1.latitude());
-      minLongitude = coord1.longitude() < coord2.longitude() ? static_cast<int16_t>(coord1.longitude()) : static_cast<int16_t>(coord2.longitude());
-      maxLongitude = coord1.longitude() < coord2.longitude() ? static_cast<int16_t>(coord2.longitude()) : static_cast<int16_t>(coord1.longitude());
-
+      GeoCoordinate coord1 = path.coordinateAt(i - 1);
+      GeoCoordinate coord2 = path.coordinateAt(i);
+      minLatitude = coord1.latitude() < coord2.latitude() ? static_cast<i8>(coord1.latitude()) : static_cast<i8>(coord2.latitude());
+      maxLatitude = coord1.latitude() < coord2.latitude() ? static_cast<i8>(coord2.latitude()) : static_cast<i8>(coord1.latitude());
+      minLongitude = coord1.longitude() < coord2.longitude() ? static_cast<i16>(coord1.longitude()) : static_cast<i16>(coord2.longitude());
+      maxLongitude = coord1.longitude() < coord2.longitude() ? static_cast<i16>(coord2.longitude()) : static_cast<i16>(coord1.longitude());
       ret &= loadTiles(minLatitude, minLongitude, maxLatitude, maxLongitude);
     }
     return ret;
   }
 
-  QGeoPath buildProfileAsGeoPath(const QGeoPath& path, float step)
+  auto buildProfileAsGeoPath(const QGeoPath& path, float step) -> QGeoPath
   {
     if(not loadTiles(path))
       return {};
-
     QGeoPath ret;
     for(auto point : path.path())
     {
@@ -154,12 +134,12 @@ namespace QtEx
       {
         auto previous = ret.coordinateAt(ret.size() - 1);
         auto azimuth = previous.azimuthTo(point);
-        auto Δ = previous.distanceTo(point);
-        float δ = step;
+        auto delta = previous.distanceTo(point);
+        f32 delta2 = step;
         auto t = previous;
-        while(δ < Δ)
+        while(delta2 < delta)
         {
-          auto u = previous.atDistanceAndAzimuth(δ, azimuth);
+          auto u = previous.atDistanceAndAzimuth(delta2, azimuth);
           try { u.setAltitude(elevation(u.latitude(), u.longitude())); }
           catch(...) { return ret; }
           if(t.altitude() != u.altitude())
@@ -168,7 +148,7 @@ namespace QtEx
             else ret.addCoordinate(u);
           }
           t = u;
-          δ += step;
+          delta2 += step;
         }
       }
       try { point.setAltitude(elevation(point.latitude(), point.longitude())); }
