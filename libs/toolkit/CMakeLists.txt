@@ -33,7 +33,7 @@ enable_testing()
 include_directories(src/c++ include)
 
 file(GLOB_RECURSE QTEX_TK src/c++/*)
-file(GLOB_RECURSE QTEX_TK_INCLUDE include/*)
+file(GLOB_RECURSE QTEX_TK_INCLUDE include/QtExToolkit/*)
 
 set(SRC ${QTEX_TK} ${QTEX_TK_INCLUDE})
 add_library(${PROJECT_NAME} STATIC ${SRC})

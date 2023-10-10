@@ -51,7 +51,7 @@ add_subdirectory(libs/core)
 add_subdirectory(libs/geo)
 add_subdirectory(libs/elevation)
 add_subdirectory(libs/scenegraph)
-#add_subdirectory(libs/application)
+add_subdirectory(libs/toolkit)
 #add_subdirectory(libs/networking)
 set(QTEX_INCLUDES
     include/QtEx/QtEx
@@ -70,7 +70,7 @@ target_link_libraries(${PROJECT_NAME}
     QtExGeo
     QtExElevation
     QtExScenegraph
-    #QtExApplication
+    QtExToolkit
     #QtExNetworking
 )
 target_include_directories(${PROJECT_NAME} PUBLIC include src/c++)
