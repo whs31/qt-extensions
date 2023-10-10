@@ -45,6 +45,6 @@ namespace QtEx
   auto QuickUtils::applicationDirectoryPath() -> String { return QCoreApplication::applicationDirPath(); }
   auto QuickUtils::blendColor(const Color& color, f32 alpha) -> Color
   {
-    return { color.red(), color.green(), color.blue(), static_cast<int>(alpha * 255) };
+    return { color.red(), color.green(), color.blue(), static_cast<i32>(alpha * 255) };
   }
 } // QtEx

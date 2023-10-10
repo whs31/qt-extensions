@@ -25,17 +25,22 @@ namespace QtEx
       };
       Q_ENUM(System)
 
+      QuickUtils(const QuickUtils&) = delete;
+      QuickUtils(QuickUtils&&) = delete;
+      QuickUtils& operator=(const QuickUtils&) = delete;
+      QuickUtils& operator=(QuickUtils&&) = delete;
+
       static auto get() -> QuickUtils*;
       static auto create(QQmlEngine* qml_engine, QJSEngine* js_engine) -> QuickUtils*;
 
-      invokable static QString uuid() ;
+      invokable static QString uuid();
       invokable static int qtVersionMajor();
       invokable static int qtVersionMinor();
       invokable static int qtVersionPatch();
       invokable static QString qtVersion();
       invokable static int architecture();
       invokable static QString applicationDirectoryPath();
-      invokable QColor blendColor(const QColor& color, float alpha);
+      invokable static QColor blendColor(const QColor& color, float alpha);
 
     private:
       explicit QuickUtils(Object* parent = nullptr);
