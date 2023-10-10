@@ -50,16 +50,16 @@ namespace QtEx
       return;
     m_path.clear();
     m_path << Variant::fromValue(m_b);
-    auto α = m_a.azimuthTo(m_b);
-    auto ⅆ = distance();
-    while(ⅆ - 10 > 0)
+    auto alpha = m_a.azimuthTo(m_b);
+    auto d = distance();
+    while(d - 10 > 0)
     {
-      GeoCoordinate t = m_a.atDistanceAndAzimuth(ⅆ * 1'000, α);
+      GeoCoordinate t = m_a.atDistanceAndAzimuth(d * 1'000, alpha);
       m_path << Variant::fromValue(GeoCoordinate(latitudeAt(t.longitude()), t.longitude(), 0));
-      ⅆ -= 10;
+      d -= 10;
     }
 
-    GeoCoordinate t = m_a.atDistanceAndAzimuth(ⅆ, α);
+    GeoCoordinate t = m_a.atDistanceAndAzimuth(d, alpha);
     if(not compare<double>(t.longitude() - m_b.longitude(), 0))
       m_path << Variant::fromValue(GeoCoordinate(latitudeAt(t.longitude()), t.longitude(), 0));
     else
