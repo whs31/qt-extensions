@@ -34,8 +34,6 @@ if(NOT CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_EXTENSIONS OFF)
 endif(NOT CMAKE_CXX_STANDARD)
 
-
-
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 
@@ -75,10 +73,9 @@ target_link_libraries(${PROJECT_NAME}
 )
 target_include_directories(${PROJECT_NAME} PUBLIC include src/c++)
 
-message(STATUS "[QtEx] Tests disabled")
 if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
     file(GLOB_RECURSE QTEX_TESTS tests/*)
-    message(NOTICE "[QtEx] Tests enabled")
+    message(NOTICE "-- [QtEx] Tests enabled")
     add_compile_definitions(QTEX_CORE_ENABLE_TESTS)
     add_executable(${PROJECT_NAME}-Test ${QTEX_INCLUDES} ${QTEX_TESTS})
     target_link_libraries(${PROJECT_NAME}-Test PRIVATE
@@ -93,5 +90,7 @@ if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
       QtExElevation
       QtExScenegraph
     )
+else()
+    message(STATUS "[QtEx] Tests disabled")
 endif()
 
