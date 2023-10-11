@@ -26,20 +26,20 @@ namespace QtEx
 
       [[nodiscard]] ISettingsProvider* io() const;      void setIo(ISettingsProvider*);
 
-      [[nodiscard]] Variant read(const String& key, const String& fid = String()) const noexcept;
+      [[nodiscard]] auto read(const String& key, const String& fid = String()) const noexcept -> Variant;
 
       template<typename T>
-      [[nodiscard]] T read(const String& key, const String& fid = String()) const noexcept
+      [[nodiscard]] auto read(const String& key, const String& fid = String()) const noexcept -> T
       { return read(key, fid).value<T>(); }
 
-      invokable void write(const QString& key, const QVariant& value, const QString& fid = QString()) const noexcept;
-      invokable void save() noexcept;
+      invokable void write(const QString& key, const QVariant& value, const QString& fid = QString()) noexcept;
+      invokable void save() const noexcept;
       invokable void load() noexcept;
       invokable void revert() noexcept;
 
     signals:
       void ioChanged();
-      void valueChanged(QString key, QString fid = QString());
+      void valueChanged(QString key, QString fid);
 
     private:
       explicit Settings(ISettingsProvider* provider, Object* parent = nullptr);
