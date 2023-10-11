@@ -51,7 +51,7 @@ Q_DECLARE_METATYPE(QtEx::PathAnalyzer::ErrorCode)
 
 namespace QtEx
 {
-  class PathAnalyzerAsync : Object
+  class PathAnalyzerAsync : public Object
   {
     Q_OBJECT
 
@@ -60,7 +60,7 @@ namespace QtEx
 
       void checkTileStatus(const GeoPath& path);
       void checkForIntersection(const GeoPath& path);
-      void checkForSlopeCompliance(const GeoPath& path, const vector<f32>& velocities, f32 roc, f32 rod, f32 hv);
+      void checkForSlopeCompliance(const GeoPath& path, const vector<f32> &velocities, f32 roc, f32 rod, f32 hv);
 
     signals:
       void tileStatusFinished(QtEx::PathAnalyzer::TileStatus status);
