@@ -32,24 +32,8 @@ find_package(Qt5 REQUIRED COMPONENTS Core Positioning Network)
 enable_testing()
 include_directories(src/c++ include)
 
-set(QTEX_GEO
-    src/c++/qtexgeo-register.h                                  src/c++/qtexgeo-register.c++
-    src/c++/qtexgeo-geomath.h                                   src/c++/qtexgeo-geomath.c++
-    src/c++/qtexgeo-orthodrom.h                                 src/c++/qtexgeo-orthodrom.c++
-    src/c++/qtexgeo-tileloader.h                                src/c++/qtexgeo-tileloader.c++
-    src/c++/qtexgeo-traverse.h                                  src/c++/qtexgeo-traverse.c++
-    src/c++/providers/qtexgeo-googlemapsprovider.h              src/c++/providers/qtexgeo-googlemapsprovider.c++
-)
-
-set(QTEX_GEO_INCLUDE
-    include/QtExGeo/GoogleMapsProvider
-    include/QtExGeo/Math
-    include/QtExGeo/Orthodrom
-    include/QtExGeo/Register
-    include/QtExGeo/TileLoader
-    include/QtExGeo/Traverse
-)
-
+file(GLOB_RECURSE QTEX_GEO src/c++/*)
+file(GLOB_RECURSE QTEX_GEO_INCLUDE include/*)
 
 set(SRC ${QTEX_GEO} ${QTEX_GEO_INCLUDE})
 add_library(${PROJECT_NAME} STATIC ${SRC})

@@ -38,27 +38,8 @@ add_subdirectory(libs/range-v3)
 enable_testing()
 include_directories(src/c++ include)
 
-set(QTEX_CORE
-    src/c++/qtexcore-global.h
-    src/c++/qtexcore-math.h
-    src/c++/qtexcore-test-macro.h
-    src/c++/qtexcore-logging.h                                  src/c++/qtexcore-logging.c++
-    src/c++/abstract/qtexcore-icolorable.h
-    src/c++/abstract/qtexcore-inameable.h
-    src/c++/geometry/qtexcore-point1d.c++                       src/c++/geometry/qtexcore-point1d.h
-    src/c++/geometry/qtexcore-point2d.c++                       src/c++/geometry/qtexcore-point2d.h
-)
-
-set(QTEX_CORE_INCLUDE
-    include/QtExCore/Global
-    include/QtExCore/Math
-    include/QtExCore/Test
-    include/QtExCore/Logging
-    include/QtExCore/Point1D
-    include/QtExCore/Point2D
-    include/QtExCore/Abstract/IColorable
-    include/QtExCore/Abstract/INameable
-)
+file(GLOB_RECURSE QTEX_CORE src/c++/*)
+file(GLOB_RECURSE QTEX_CORE_INCLUDE include/*)
 
 set(SRC ${QTEX_CORE} ${QTEX_CORE_INCLUDE})
 add_library(${PROJECT_NAME} STATIC ${SRC})
