@@ -26,11 +26,20 @@ namespace QtEx
 
       [[nodiscard]] ISettingsProvider* io() const;      void setIo(ISettingsProvider*);
 
-      invokable void write(const QString& key, const QVariant& value, const QString& json_path = QString()) const noexcept; // @todo
-      invokable
+      [[nodiscard]] Variant read(const String& key, const String& fid = String()) const noexcept;
+
+      template<typename T>
+      [[nodiscard]] T read(const String& key, const String& fid = String()) const noexcept
+      { return read(key, fid).value<T>(); }
+
+      invokable void write(const QString& key, const QVariant& value, const QString& fid = QString()) const noexcept;
+      invokable void save() noexcept;
+      invokable void load() noexcept;
+      invokable void revert() noexcept;
 
     signals:
       void ioChanged();
+      void valueChanged(QString key, QString fid = QString());
 
     private:
       explicit Settings(ISettingsProvider* provider, Object* parent = nullptr);
