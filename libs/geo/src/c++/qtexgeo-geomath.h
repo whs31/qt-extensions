@@ -7,6 +7,7 @@
 #include <cstdint>
 
 class QGeoCoordinate;
+class QGeoPath;
 class QPointF;
 
 #if !defined(QTEX_CORE_MAKE_PUBLIC_ALIAS_FOR_QT_CLASSES)
@@ -14,6 +15,7 @@ namespace QtEx
 {
 #endif
 using GeoCoordinate = QGeoCoordinate;
+using GeoPath = QGeoPath;
 #if !defined(QTEX_CORE_MAKE_PUBLIC_ALIAS_FOR_QT_CLASSES)
 } // QtEx
 #endif

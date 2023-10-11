@@ -54,11 +54,13 @@ using u16 = uint16_t;
 using u32 = uint32_t;
 using u64 = uint64_t;
 using usize = size_t;
-using isize = i64;
+using isize = int;
 using uptr = uintptr_t;
 using iptr = ptrdiff_t;
 using f32 = float;
 using f64 = double;
+
+#define as_const qAsConst
 
 #if defined(QTEX_CORE_ENABLE_TESTS)
 // if needed

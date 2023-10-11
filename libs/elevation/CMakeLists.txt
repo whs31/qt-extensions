@@ -28,31 +28,26 @@ set(CMAKE_AUTOMOC ON)
 
 find_package(GDAL REQUIRED)
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
-find_package(Qt5 REQUIRED COMPONENTS Core Positioning)
+find_package(Qt5 REQUIRED
+  COMPONENTS
+    Core
+    Positioning
+    Concurrent
+)
 
 enable_testing()
 include_directories(${GDAL_INCLUDE_DIR})
 include_directories(src/c++ include)
 
-set(QTEX_ELEVATION
-    src/c++/qtexelevation-tile.h                    src/c++/qtexelevation-tile.c++
-    src/c++/qtexelevation-tilestorage.h             src/c++/qtexelevation-tilestorage.c++
-    src/c++/qtexelevation-types.h
-    src/c++/qtexelevation-algorithms.h              src/c++/qtexelevation-algorithms.c++
-)
-
-set(QTEX_ELEVATION_INCLUDE
-    include/QtExElevation/Tile
-    include/QtExElevation/TileStorage
-    include/QtExElevation/Types
-    include/QtExElevation/Algorithms
-)
+file(GLOB_RECURSE QTEX_ELEVATION src/c++/*)
+file(GLOB_RECURSE QTEX_ELEVATION_INCLUDE include/*)
 
 set(SRC ${QTEX_ELEVATION} ${QTEX_ELEVATION_INCLUDE})
 add_library(${PROJECT_NAME} STATIC ${SRC})
 target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt5::Core
     Qt5::Positioning
+    Qt5::Concurrent
     ${GDAL_LIBRARY}
     QtExCore
     QtExGeo

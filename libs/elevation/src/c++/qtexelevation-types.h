@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include <QtPositioning/QGeoCoordinate>
+#include <QtExGeo/Math>
+
 namespace QtEx
 {
   struct GraphPoint
@@ -27,12 +30,13 @@ namespace QtEx
     };
 
     IntersectionPoint();
-    IntersectionPoint(double altitude, double distance, bool base, Intersection state);
+    IntersectionPoint(double altitude, double distance, bool base, Intersection state, GeoCoordinate coord = GeoCoordinate());
 
     double altitude;          ///< Высота точки в метрах.
     double distance;          ///< Расстояние точки от нуля в метрах.
     bool base;                ///< Является ли точка базовой (исходной) точкой пути, или она появилась в результате пересечения с рельефом.
     Intersection state;       ///< Состояние пересечения.
+    GeoCoordinate coordinate;
   };
 } // QtEx
 
@@ -55,11 +59,12 @@ namespace QtEx
     , state(NonIntersecting)
   {}
 
-  inline IntersectionPoint::IntersectionPoint(double altitude, double distance, bool base, Intersection state)
+  inline IntersectionPoint::IntersectionPoint(double altitude, double distance, bool base, Intersection state, GeoCoordinate coord)
     : altitude(altitude)
     , distance(distance)
     , base(base)
     , state(state)
+    , coordinate(coord)
   {}
 } // QtEx
 
