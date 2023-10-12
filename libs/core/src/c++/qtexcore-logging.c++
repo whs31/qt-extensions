@@ -47,8 +47,6 @@ namespace QtEx
     return r.capturedTexts()
             .back()
             .replace("::", Log::separator())
-            .prepend("\033[4;2m")
-            .append("\033[24;22m")
             .append(":")
             //.append("\t")
             .toLocal8Bit()
