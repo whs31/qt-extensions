@@ -18,15 +18,19 @@ namespace QtEx
   {
     if(path.isEmpty())
       return InvalidPath;
-    bool was_present = false;
-    for(const auto& point : as_const(path.path()))
-    {
-      try { elevation(point, PreLoad::True); /* ==> */ was_present = true; }
-      catch(...)
-      {
-        if(was_present)
+
+    auto tileExists = [](GeoCoordinate coord) -> bool {
+        try { elevation(coord, PreLoad::True); return true; }
+        catch(...) { return false; }
+    };
+    bool was_present = tileExists(path.path().front());
+
+    for (int i = 1; i < path.size(); ++i) {
+      auto pointCheck = tileExists(path.coordinateAt(i));
+      if( (not was_present and pointCheck) or (was_present and not pointCheck)) {
           return PartiallyMissing;
       }
+      was_present = pointCheck;
     }
     if(not was_present)
       return FullyMissing;
