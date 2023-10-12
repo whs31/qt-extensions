@@ -12,6 +12,7 @@
 #define scope_information QtEx::Private::parseScopeInfo(Q_FUNC_INFO)
 #define scope_information_str std::string(scope_information)
 #define scope_information_qstr String(scope_information)
+#define with_trace << scope_information <<
 
 namespace QtEx
 {
