@@ -18,14 +18,12 @@ namespace QtEx
   {
     if(path.isEmpty())
       return InvalidPath;
-    bool was_missing = false;
     bool was_present = false;
     for(const auto& point : as_const(path.path()))
     {
       try { elevation(point, PreLoad::True); /* ==> */ was_present = true; }
       catch(...)
       {
-        was_missing = true;
         if(was_present)
           return PartiallyMissing;
       }
@@ -173,19 +171,22 @@ namespace QtEx
 
   void PathAnalyzerAsync::checkTileStatus(const GeoPath& path)
   {
-    auto f = QtConcurrent::run(PathAnalyzer::checkTileStatus, path);
-    emit tileStatusFinished(f.result());
+    QtConcurrent::run([=](){
+      emit tileStatusFinished(PathAnalyzer::checkTileStatus(path));
+    });
   }
 
   void PathAnalyzerAsync::checkForIntersection(const GeoPath& path)
   {
-    auto f = QtConcurrent::run(PathAnalyzer::checkForIntersection, path);
-    emit intersectionFinished(f.result());
+    QtConcurrent::run([=](){
+      emit intersectionFinished(PathAnalyzer::checkForIntersection(path));
+    });
   }
 
   void PathAnalyzerAsync::checkForSlopeCompliance(const GeoPath& path, const vector<f32>& velocities, f32 roc, f32 rod, f32 hv)
   {
-    auto f = QtConcurrent::run(PathAnalyzer::checkForSlopeCompliance, path, velocities, roc, rod, hv);
-    emit slopeComplianceFinished(f.result());
+    QtConcurrent::run([=](){
+      emit slopeComplianceFinished(PathAnalyzer::checkForSlopeCompliance(path, velocities, roc, rod, hv));
+    });
   }
 } // QtEx
