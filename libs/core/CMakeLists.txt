@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 project(QtExCore
   VERSION 0.0.1
   DESCRIPTION "Qt Extensions Core Library"
-  HOMEPAGE_URL "uav.radar-mms.com"
+  HOMEPAGE_URL "io.github.whs31"
   LANGUAGES C CXX
 )
 

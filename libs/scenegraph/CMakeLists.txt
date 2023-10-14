@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 project(QtExScenegraph
   VERSION 0.0.1
   DESCRIPTION "Qt Extensions Scenegraph Library"
-  HOMEPAGE_URL "uav.radar-mms.com"
+  HOMEPAGE_URL "io.github.whs31"
   LANGUAGES C CXX
 )
 
