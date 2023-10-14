@@ -9,6 +9,7 @@
 #include <mutex>
 #include <QtCore/QString>
 #include <QtExCore/Global>
+#include "qtexelevation-errorcodes.h"
 
 using std::map;
 using std::mutex;
@@ -17,35 +18,35 @@ using std::unique_ptr;
 namespace QtEx
 {
   class Tile;
-
   struct TileKey
   {
     TileKey();
-    TileKey(int8_t latitude, int16_t longitude);
-    TileKey(double latitude, double longitude);
+    TileKey(i8 latitude, i16 longitude);
+    TileKey(f64 latitude, f64 longitude);
 
-    int8_t latitude;
-    int16_t longitude;
+    i8 latitude;
+    i16 longitude;
 
     friend bool operator<(TileKey const& l, TileKey const& r)
     {
-      if (l.latitude < r.latitude) return true;
-      else if (l.latitude > r.latitude) return false;
-      else return (l.longitude < r.longitude);
+      if(l.latitude < r.latitude) return true;
+      else if(l.latitude > r.latitude) return false;
+      else return(l.longitude < r.longitude);
     }
   };
 
   class TileStorage
   {
     public:
-      static TileStorage* get();
+      static auto get() -> TileStorage*;
       TileStorage(TileStorage&) = delete;
 
-      [[nodiscard]] String storagePath() const;  void setStoragePath(const String&);
+      [[nodiscard]] String storagePath() const;
+      void setStoragePath(const String&);
 
-      bool load(int8_t latitude, int16_t longitude);
+      auto load(i8 latitude, i16 longitude) -> bool;
 
-      [[nodiscard]] int16_t elevation(double latitude, double longitude) const;
+      [[nodiscard]] auto elevation(double latitude, double longitude) const -> expected<f32, ElevationError>;
 
     private:
       TileStorage();

@@ -21,7 +21,7 @@ namespace QtEx
     return ret;
   }
 
-  auto elevation(const f64 latitude, const f64 longitude, PreLoad mode) -> i16
+  auto elevation(const f64 latitude, const f64 longitude, PreLoad mode) -> expected<f32, ElevationError>
   {
     f64 lat = latitude;
     f64 lon = longitude;
@@ -35,10 +35,14 @@ namespace QtEx
       lon = std::ceil(longitude);
 
     if(mode == PreLoad::True)
-      loadTile(static_cast<i8>(lat), static_cast<i8>(lon));
+      loadTile(static_cast<i8>(lat), static_cast<i16>(lon));
 
-    try { return TileStorage::get()->elevation(lat, lon); }
-    catch(std::runtime_error& x) { throw x; }
+    return TileStorage::get()->elevation(lat, lon);
+  }
+
+  auto elevation(const GeoCoordinate& coord, PreLoad mode) -> expected<f32, ElevationError>
+  {
+    return elevation(coord.latitude(), coord.longitude(), mode);
   }
 
   auto buildProfile(const QGeoPath& path, u8 discrete) -> vector<pair<u32, i16>>
@@ -68,11 +72,10 @@ namespace QtEx
             auto e = point.latitude();
             auto f = point.longitude();
 
-            try { deltaPointGeo.setAltitude(elevation(deltaPointGeo.latitude(), deltaPointGeo.longitude())); }
-            catch(std::runtime_error& x) {
-              Log::panic() << x.what();
+            auto new_altitude = elevation(deltaPointGeo);
+            if(not new_altitude.has_value())
               return {};
-            }
+            deltaPointGeo.setAltitude(new_altitude.value());
             if(prevDeltaPointGeo.altitude() != deltaPointGeo.altitude())
             {
               if(prevDeltaPointGeo.altitude() > deltaPointGeo.altitude())
@@ -85,11 +88,10 @@ namespace QtEx
           }
           distanceFromStart += distanceFromPrevBasePoint;
         }
-        try { point.setAltitude(elevation(point.latitude(), point.longitude())); }
-        catch(std::runtime_error& x) {
-          Log::panic() << x.what();
+        auto new_altitude = elevation(point);
+        if(not new_altitude.has_value())
           return {};
-        }
+        point.setAltitude(new_altitude.value());
         groundProfile.emplace_back(distanceFromStart, point.altitude());
         prevBasePointGeo = point;
       }
@@ -140,8 +142,10 @@ namespace QtEx
         while(delta2 < delta)
         {
           auto u = previous.atDistanceAndAzimuth(delta2, azimuth);
-          try { u.setAltitude(elevation(u.latitude(), u.longitude())); }
-          catch(...) { return ret; }
+          auto alt = elevation(u);
+          if(not alt.has_value())
+            return ret;
+          u.setAltitude(alt.value());
           if(t.altitude() != u.altitude())
           {
             if(t.altitude() > u.altitude()) ret.addCoordinate(t);
@@ -151,8 +155,10 @@ namespace QtEx
           delta2 += step;
         }
       }
-      try { point.setAltitude(elevation(point.latitude(), point.longitude())); }
-      catch(...) { return ret; }
+      auto alt = elevation(point);
+      if(not alt.has_value())
+        return ret;
+      point.setAltitude(alt.value());
       ret.addCoordinate(point);
     }
     return ret;

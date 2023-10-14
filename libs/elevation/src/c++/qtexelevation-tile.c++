@@ -11,7 +11,7 @@
 
 namespace QtEx
 {
-  Tile::Tile(const String& path, int8_t latitude, int16_t longitude)
+  Tile::Tile(const String& path, i8 latitude, i16 longitude)
     : m_tllat(0)
     , m_tllon(0)
     , m_latsize(0)
@@ -23,19 +23,19 @@ namespace QtEx
     String f = path + "/";
     if(latitude >= 0)
     {
-      if(longitude < 0) /* ==> */ f += "0/";
-      else /* ==> */ f += "1/";
+      if(longitude < 0) f += "0/";
+      else f += "1/";
     }
     else
     {
-      if(longitude < 0) /* ==> */ f += "2/";
-      else /* ==> */ f += "3/";
+      if(longitude < 0) f += "2/";
+      else f += "3/";
     }
     f += String("%1/%2.tif").arg(abs<double>(latitude)).arg(abs<double>(longitude));
     auto dataset = (GDALDataset*)GDALOpen(f.toLocal8Bit().data(), GA_ReadOnly);
     if(dataset)
     {
-      double adfGeoTransform[6];
+      f64 adfGeoTransform[6];
       dataset->GetGeoTransform(adfGeoTransform);
       m_latsize = adfGeoTransform[5];
       m_lonsize = adfGeoTransform[1];
@@ -47,25 +47,25 @@ namespace QtEx
         GDALRasterBand* band = dataset->GetRasterBand(1);
         m_tilexsize = band->GetXSize();
         m_tileysize = band->GetYSize();
-        m_tile = ByteArray(static_cast<int>(m_tilexsize * m_tileysize * sizeof(uint16_t)), 0x00);
+        m_tile = ByteArray(static_cast<int>(m_tilexsize * m_tileysize * sizeof(u16)), 0x00);
         if(band->RasterIO(GF_Read, 0, 0, m_tilexsize, m_tileysize, m_tile.data(), m_tilexsize, m_tileysize, GDT_Int16, 0, 0))
           m_tile = ByteArray();
       }
     }
   }
 
-  int16_t Tile::elevation(double latitude, double longitude) const
+  auto Tile::elevation(double latitude, double longitude) const -> expected<f32, ElevationError>
   {
     if(not m_tile.size())
-      throw std::runtime_error(scope_information_str + "Tile not found");
+      return unexpected(ElevationError::TileNotFound);
 
-    auto index = static_cast<uint32_t>((round((latitude - m_tllat) / m_latsize) * m_tilexsize
-                                        + round((longitude - m_tllon) / m_lonsize)) * sizeof(int16_t));
+    auto index = static_cast<u32>((round((latitude - m_tllat) / m_latsize) * m_tilexsize
+                                         + round((longitude - m_tllon) / m_lonsize)) * sizeof(i16));
     QDataStream stream(m_tile);
     stream.setByteOrder(QDataStream::LittleEndian);
-    int16_t elevationValue;
+    i16 elevationValue;
     stream.skipRawData(static_cast<int>(index));
     stream >> elevationValue;
-    return elevationValue;
+    return static_cast<f32>(elevationValue);
   }
 } // QtEx

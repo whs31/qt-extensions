@@ -19,15 +19,14 @@ namespace QtEx
     if(path.isEmpty())
       return InvalidPath;
 
-    auto tileExists = [](GeoCoordinate coord) -> bool {
-        try { elevation(coord, PreLoad::True); return true; }
-        catch(...) { return false; }
+    auto tileExists = [](const GeoCoordinate& coord) -> bool {
+        return elevation(coord, PreLoad::True).has_value();
     };
     bool was_present = tileExists(path.path().front());
 
     for (int i = 1; i < path.size(); ++i) {
       auto pointCheck = tileExists(path.coordinateAt(i));
-      if( (not was_present and pointCheck) or (was_present and not pointCheck)) {
+      if((not was_present and pointCheck) or (was_present and not pointCheck)) {
           return PartiallyMissing;
       }
       was_present = pointCheck;
@@ -60,8 +59,8 @@ namespace QtEx
             QLineF a(result_path.back().distance, result_path.back().altitude, point.distance, point.altitude);
             QLineF b(ground_profile[i-1].distance, ground_profile[i-1].altitude, ground_profile[i].distance, ground_profile[i].altitude);
             if(a.intersects(b, &f) == QLineF::BoundedIntersection)
-              result_path.emplace_back(static_cast<float>(f.y()),
-                                       static_cast<float>(f.x()),
+              result_path.emplace_back(static_cast<f32>(f.y()),
+                                       static_cast<f32>(f.x()),
                                        false,
                                        (result_path.back().state == IntersectionPoint::InsideGround
                                         or result_path.back().state == IntersectionPoint::IntersectingIn)
@@ -73,7 +72,8 @@ namespace QtEx
         }
       }
 
-      point.state = (point.altitude > elevation<f32>(point.coordinate)) ? IntersectionPoint::NonIntersecting : IntersectionPoint::InsideGround;
+      point.state = (point.altitude > elevation(point.coordinate).value())
+          ? IntersectionPoint::NonIntersecting : IntersectionPoint::InsideGround;
       result_path.push_back(point);
     }
 
@@ -89,7 +89,7 @@ namespace QtEx
     if(not a.isValid() or not b.isValid())
       return unexpected(InvalidArguments);
     GeoCoordinate p = a;
-    p.setAltitude(elevation(p));
+    p.setAltitude(elevation(p).value());
     f64 azimuth = a.azimuthTo(b);
     f64 distance = a.distanceTo(b);
     QLineF line(0, a.altitude(), distance, b.altitude());
@@ -98,7 +98,7 @@ namespace QtEx
     while(d < distance)
     {
       GeoCoordinate dp = a.atDistanceAndAzimuth(d, azimuth);
-      dp.setAltitude(elevation(dp));
+      dp.setAltitude(elevation(dp).value());
       if(p.altitude() != dp.altitude())
       {
         QPointF profile_segment_point_2;
@@ -155,9 +155,9 @@ namespace QtEx
     for(int i = 0; i < list.size(); i++)
     {
       if(i)
-        distance += static_cast<float>(path.length(i - 1, i));
+        distance += static_cast<f32>(path.length(i - 1, i));
       const QGeoCoordinate& point = list[i];
-      ret.emplace_back(static_cast<float>(point.altitude()),
+      ret.emplace_back(static_cast<f32>(point.altitude()),
                        distance,
                        true,
                        IntersectionPoint::NonIntersecting,

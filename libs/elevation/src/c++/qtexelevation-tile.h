@@ -6,20 +6,24 @@
 
 #include <QtCore/QByteArray>
 #include <QtExCore/Global>
+#include "qtexelevation-errorcodes.h"
 
 namespace QtEx
 {
   class Tile
   {
     public:
-      Tile(const String& path, int8_t latitude, int16_t longitude);
+      Tile(const String& path, i8 latitude, i16 longitude);
 
-      [[nodiscard]] int16_t elevation(double latitude, double longitude) const;
+      [[nodiscard]] auto elevation(double latitude, double longitude) const -> expected<f32, ElevationError>;
 
     private:
-      double m_tllat, m_tllon;
-      double m_latsize, m_lonsize;
-      int m_tilexsize, m_tileysize;
+      f64 m_tllat;
+      f64 m_tllon;
+      f64 m_latsize;
+      f64 m_lonsize;
+      int m_tilexsize;
+      int m_tileysize;
       ByteArray m_tile;
   };
 } // QtEx

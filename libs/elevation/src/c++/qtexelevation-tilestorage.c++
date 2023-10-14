@@ -11,11 +11,12 @@
 
 namespace QtEx
 {
-  TileStorage* TileStorage::get() { static TileStorage i; return &i; }
+  auto TileStorage::get() -> TileStorage* { static TileStorage i; return &i; }
+
   String TileStorage::storagePath() const { return m_storagePath; }
   void TileStorage::setStoragePath(const String & path) { m_storagePath = path; }
 
-  bool TileStorage::load(int8_t latitude, int16_t longitude)
+  auto TileStorage::load(i8 latitude, i16 longitude) -> bool
   {
     TileKey key(latitude, longitude);
     if(not m_storage.count(key))
@@ -29,17 +30,12 @@ namespace QtEx
     return m_storage.count(key);
   }
 
-  int16_t TileStorage::elevation(const double latitude, const double longitude) const
+  auto TileStorage::elevation(const double latitude, const double longitude) const -> expected<f32, ElevationError>
   {
     TileKey key(latitude, longitude);
     if(not m_storage.count(key) or m_storage.at(key) == nullptr)
-      throw std::runtime_error(scope_information_str + "Access to non-created tile (1)");
-
-    try
-    {
-      return m_storage.at(key).get()->elevation(latitude, longitude);
-    }
-    catch(std::runtime_error& x) { throw x; }
+      return unexpected(ElevationError::TileNotFound);
+    return m_storage.at(key).get()->elevation(latitude, longitude);
   }
 
   TileStorage::TileStorage()
@@ -53,12 +49,12 @@ namespace QtEx
     , longitude(0)
   {}
 
-  TileKey::TileKey(int8_t latitude, int16_t longitude)
+  TileKey::TileKey(i8 latitude, i16 longitude)
     : latitude(latitude)
     , longitude(longitude)
   {}
 
-  TileKey::TileKey(double latitude, double longitude)
+  TileKey::TileKey(f64 latitude, f64 longitude)
     : latitude(floor(latitude))
     , longitude(floor(longitude))
   {}
