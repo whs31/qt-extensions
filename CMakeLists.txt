@@ -11,7 +11,9 @@ if(TARGET ${PROJECT_NAME})
     return()
 endif()
 
-option(QTEX_DISABLE_GDAL "Disable GDAL dependency (and remove QtExElevation)" OFF)
+option(QTEX_NO_ELEVATION "Do not include QtEx Elevation in build" OFF)
+
+message(STATUS "[QtEx] Disable QtEx::Elevation: ${QTEX_NO_ELEVATION}")
 
 if(WIN32)
     include(FetchContent)
@@ -46,8 +48,7 @@ endif()
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt5 REQUIRED COMPONENTS Core Quick Location Positioning Network)
 
-message(STATUS "[QtEx] GDAL status: ${QTEX_DISABLE_GDAL}")
-if(${QTEX_DISABLE_GDAL} EQUAL OFF)
+if(QTEX_NO_ELEVATION)
     message(STATUS "[QtEx] GDAL-dependent libraries will not be compiled.")
 else()
     message(STATUS "[QtEx] GDAL included.")
@@ -55,7 +56,7 @@ endif()
 
 add_subdirectory(libs/core)
 add_subdirectory(libs/geo)
-if(QTEX_DISABLE_GDAL EQUAL OFF)
+if(NOT QTEX_NO_ELEVATION)
     add_subdirectory(libs/elevation)
 endif()
 add_subdirectory(libs/scenegraph)
@@ -70,7 +71,7 @@ set(QTEX_INCLUDES
 include_directories(include src/c++)
 add_library(${PROJECT_NAME} STATIC ${QTEX_INCLUDES})
 
-if(${QTEX_DISABLE_GDAL} EQUAL ON)
+if(QTEX_NO_ELEVATION)
     target_link_libraries(${PROJECT_NAME}
       PRIVATE
         Qt5::Core
@@ -133,3 +134,4 @@ else()
     message(STATUS "[QtEx] Tests disabled")
 endif()
 
+unset(QTEX_NO_ELEVATION CACHE)
