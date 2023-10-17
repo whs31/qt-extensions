@@ -1,12 +1,12 @@
+//#define ENABLE_ELEVATION_TESTS
+#ifdef ENABLE_ELEVATION_TESTS
+
 #include <QtExCore/Test>
 #include <QtExCore/Global>
 #include <QtExElevation/Algorithms>
 #include <QtExElevation/PathAnalyzer>
 
 using namespace QtEx;
-
-//#define ENABLE_ELEVATION_TESTS
-#ifdef ENABLE_ELEVATION_TESTS
 
 declare_test_case(PathAnalyzer, TileStatusTest)
   pass_if_equal(PathAnalyzer::Present, PathAnalyzer::checkTileStatus(GeoPath({{60, 30, 50}, {60.1, 30.1, 50}, {60.2, 30.2, 50}})))

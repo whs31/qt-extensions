@@ -11,13 +11,14 @@ if(TARGET ${PROJECT_NAME})
     return()
 endif()
 
+option(QTEX_DISABLE_GDAL "Disable GDAL dependency (and remove QtExElevation)" OFF)
+
 if(WIN32)
     include(FetchContent)
     FetchContent_Declare(
       googletest
       URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
     )
-    # For Windows: Prevent overriding the parent project's compiler/linker settings
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(googletest)
 endif()
@@ -45,9 +46,18 @@ endif()
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt5 REQUIRED COMPONENTS Core Quick Location Positioning Network)
 
+message(STATUS "[QtEx] GDAL status: ${QTEX_DISABLE_GDAL}")
+if(${QTEX_DISABLE_GDAL} EQUAL OFF)
+    message(STATUS "[QtEx] GDAL-dependent libraries will not be compiled.")
+else()
+    message(STATUS "[QtEx] GDAL included.")
+endif()
+
 add_subdirectory(libs/core)
 add_subdirectory(libs/geo)
-add_subdirectory(libs/elevation)
+if(QTEX_DISABLE_GDAL EQUAL OFF)
+    add_subdirectory(libs/elevation)
+endif()
 add_subdirectory(libs/scenegraph)
 add_subdirectory(libs/toolkit)
 #add_subdirectory(libs/networking)
@@ -59,18 +69,34 @@ set(QTEX_INCLUDES
 
 include_directories(include src/c++)
 add_library(${PROJECT_NAME} STATIC ${QTEX_INCLUDES})
-target_link_libraries(${PROJECT_NAME}
-  PRIVATE
-    Qt5::Core
-    Qt5::Quick
-  PUBLIC
-    QtExCore
-    QtExGeo
-    QtExElevation
-    QtExScenegraph
-    QtExToolkit
-    #QtExNetworking
-)
+
+if(${QTEX_DISABLE_GDAL} EQUAL ON)
+    target_link_libraries(${PROJECT_NAME}
+      PRIVATE
+        Qt5::Core
+        Qt5::Quick
+      PUBLIC
+        QtExCore
+        QtExGeo
+        QtExScenegraph
+        QtExToolkit
+        #QtExNetworking
+    )
+else()
+    target_link_libraries(${PROJECT_NAME}
+      PRIVATE
+        Qt5::Core
+        Qt5::Quick
+      PUBLIC
+        QtExCore
+        QtExGeo
+        QtExElevation
+        QtExScenegraph
+        QtExToolkit
+        #QtExNetworking
+    )
+endif()
+
 target_include_directories(${PROJECT_NAME} PUBLIC include src/c++)
 
 if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
@@ -78,18 +104,31 @@ if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
     message(NOTICE "-- [QtEx] Tests enabled")
     add_compile_definitions(QTEX_CORE_ENABLE_TESTS)
     add_executable(${PROJECT_NAME}-Test ${QTEX_INCLUDES} ${QTEX_TESTS})
-    target_link_libraries(${PROJECT_NAME}-Test PRIVATE
-      GTest::GTest
-      Qt5::Network
-      Qt5::Positioning
-      Qt5::Location
-      Qt5::Quick
-      Qt5::Core
-      QtExCore
-      QtExGeo
-      QtExElevation
-      QtExScenegraph
-    )
+    if(${QTEX_DISABLE_GDAL} EQUAL ON)
+        target_link_libraries(${PROJECT_NAME}-Test PRIVATE
+          GTest::GTest
+          Qt5::Network
+          Qt5::Positioning
+          Qt5::Location
+          Qt5::Quick
+          Qt5::Core
+          QtExCore
+          QtExGeo
+          QtExScenegraph
+        )
+    else()
+        target_link_libraries(${PROJECT_NAME}-Test PRIVATE
+          GTest::GTest
+          Qt5::Network
+          Qt5::Positioning
+          Qt5::Location
+          Qt5::Quick
+          Qt5::Core
+          QtExCore
+          QtExGeo
+          QtExScenegraph
+        )
+    endif()
 else()
     message(STATUS "[QtEx] Tests disabled")
 endif()
