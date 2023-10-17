@@ -13,7 +13,7 @@
 namespace QtEx
 {
   template<typename T>
-  using enable_if_decimal = std::enable_if_t<std::is_floating_point_v<T>, T>;
+  using enable_if_decimal = std::enable_if_t<std::is_floating_point<T>::value, T>;
 
   template<typename T>
   using enable_if_decimal_logic = std::enable_if_t<std::is_floating_point<T>::value, bool>;
