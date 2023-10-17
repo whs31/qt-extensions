@@ -63,7 +63,6 @@ using f32 = float;
 using f64 = double;
 
 #define as_const qAsConst
-#define self (*this)
 
 #if defined(QTEX_CORE_ENABLE_TESTS)
 // if needed
