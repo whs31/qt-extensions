@@ -7,9 +7,6 @@ project(QtExCore
   LANGUAGES C CXX
 )
 
-option(QTEX_CORE_USE_DOUBLE "If option is on, all math functions/classes will default to double instead of float" OFF)
-option(QTEX_CORE_MAKE_PUBLIC_ALIAS_FOR_QT_CLASSES "Propagate QString/QObject/etc type aliases to global scope" ON)
-
 if(NOT CMAKE_C_STANDARD)
     set(CMAKE_C_STANDARD 17)
     set(CMAKE_C_STANDARD_REQUIRED OFF)
@@ -32,8 +29,8 @@ set(CMAKE_AUTOMOC ON)
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt5 REQUIRED COMPONENTS Core Quick)
 
-add_subdirectory(libs/expected)
-add_subdirectory(libs/range-v3)
+set(BB_QT_TYPEDEFS ON CACHE BOOL "Enable Qt-specific type aliases" FORCE)
+add_subdirectory(libs/backbone)
 
 enable_testing()
 include_directories(src/c++ include)
@@ -47,10 +44,8 @@ target_link_libraries(${PROJECT_NAME}
   PRIVATE
     Qt5::Core
     Qt5::Quick
-
   PUBLIC
-    expected
-    range-v3
+    Backbone
 )
 target_include_directories(${PROJECT_NAME} PUBLIC include src)
 

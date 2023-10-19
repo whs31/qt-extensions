@@ -7,6 +7,8 @@
 #include <QtCore/QString>
 #include "QtExCore/Global"
 
+using Qt::String;
+
 namespace QtEx
 {
   class INameable

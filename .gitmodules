@@ -1,0 +1,3 @@
+[submodule "libs/core/libs/backbone"]
+	path = libs/core/libs/backbone
+	url = https://github.com/whs31/backbone.git

@@ -14,6 +14,8 @@
 #define scope_information_qstr String(scope_information)
 #define with_trace << scope_information <<
 
+using Qt::String;
+
 namespace QtEx
 {
   enum LoggingMode

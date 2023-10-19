@@ -7,6 +7,8 @@
 #include <QtGui/QColor>
 #include "QtExCore/Global"
 
+using Qt::Color;
+
 namespace QtEx
 {
   class IColorable
