@@ -29,8 +29,8 @@ set(CMAKE_AUTOMOC ON)
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt5 REQUIRED COMPONENTS Core Quick)
 
-set(BB_QT_TYPEDEFS ON CACHE BOOL "Enable Qt-specific type aliases" FORCE)
-add_subdirectory(libs/backbone)
+set(LIBRA_QT_TYPEDEFS ON CACHE BOOL "Enable Qt-specific type aliases" FORCE)
+add_subdirectory(libs/libra)
 
 enable_testing()
 include_directories(src/c++ include)
@@ -45,7 +45,7 @@ target_link_libraries(${PROJECT_NAME}
     Qt5::Core
     Qt5::Quick
   PUBLIC
-    Backbone
+    Libra
 )
 target_include_directories(${PROJECT_NAME} PUBLIC include src)
 

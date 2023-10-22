@@ -9,6 +9,10 @@
 #include <QtQml/qqml.h>
 #include <QtExCore/Global>
 
+using Qt::Object;
+using Qt::String;
+using Qt::Color;
+
 namespace QtEx
 {
   class QuickUtils : public Object

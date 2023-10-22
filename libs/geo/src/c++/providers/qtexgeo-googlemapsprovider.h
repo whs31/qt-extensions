@@ -7,6 +7,9 @@
 #include <QtCore/QObject>
 #include <QtExCore/Global>
 
+using Qt::Object;
+using Qt::String;
+
 namespace QtEx
 {
   class GoogleMapsProvider : public Object

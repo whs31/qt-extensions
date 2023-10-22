@@ -5,7 +5,7 @@
 #include <memory>
 #include <QtCore/QtGlobal>
 #include <QtCore/QMetaType>
-#include <Backbone/Global>
+#include <Libra/Global>
 
 #if defined(QTEX_CORE_USE_DOUBLE)
   using decimal = double;

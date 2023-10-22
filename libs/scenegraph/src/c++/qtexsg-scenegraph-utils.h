@@ -8,6 +8,8 @@
 #include <QtQuick/QSGGeometryNode>
 #include <QtExCore/Global>
 
+using Qt::Color;
+
 namespace QtEx
 {
   enum CreationMode

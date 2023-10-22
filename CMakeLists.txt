@@ -105,7 +105,7 @@ if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
     message(NOTICE "-- [QtEx] Tests enabled")
     add_compile_definitions(QTEX_CORE_ENABLE_TESTS)
     add_executable(${PROJECT_NAME}-Test ${QTEX_INCLUDES} ${QTEX_TESTS})
-    if(${QTEX_DISABLE_GDAL} EQUAL ON)
+    if(QTEX_NO_ELEVATION)
         target_link_libraries(${PROJECT_NAME}-Test PRIVATE
           GTest::GTest
           Qt5::Network

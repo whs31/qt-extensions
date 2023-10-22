@@ -9,6 +9,9 @@
 #include <QtExCore/Global>
 #include <QtExGeo/Math>
 
+using Qt::Variant;
+using Qt::GeoCoordinate;
+
 namespace QtEx
 {
   class Orthodrom

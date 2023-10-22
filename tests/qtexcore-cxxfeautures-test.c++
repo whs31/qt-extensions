@@ -1,8 +1,9 @@
 #include <QtExCore/Test>
 #include <QtExCore/Global>
+#include <Libra/Expected>
 #include <range/v3/view/enumerate.hpp>
 
-using namespace QtEx;
+using Qt::String;
 using std::vector;
 
 namespace Testing

@@ -14,6 +14,10 @@ class QGeoPolygon;
 class QNetworkAccessManager;
 class QNetworkReply;
 
+using Qt::Object;
+using Qt::String;
+using Qt::ByteArray;
+
 namespace QtEx
 {
   class TileLoader : public Object
