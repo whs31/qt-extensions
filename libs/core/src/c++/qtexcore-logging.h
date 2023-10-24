@@ -14,6 +14,9 @@
 #define scope_information_qstr String(scope_information)
 #define with_trace << scope_information <<
 
+#define llog(Mode) QtEx::Log::log(QtEx:: Mode) << scope_information <<
+#define llog_no_trace(Mode) QtEx::Log::log(QtEx:: Mode) <<
+
 using Qt::String;
 
 namespace QtEx

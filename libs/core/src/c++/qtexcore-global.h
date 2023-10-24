@@ -7,6 +7,9 @@
 #include <QtCore/QMetaType>
 #include <Libra/Global>
 
+namespace QtEx {}
+namespace Qtx = QtEx;
+
 #if defined(QTEX_CORE_USE_DOUBLE)
   using decimal = double;
 #else
