@@ -23,13 +23,7 @@ namespace QtEx
   template<typename T> constexpr inline bool compare(T a, T b) noexcept;
   template<> constexpr inline bool compare<float>(float a, float b) noexcept;
   template<> constexpr inline bool compare<double>(double a, double b) noexcept;
-
   template<typename T> constexpr inline bool is_null(T a) noexcept;
-
-  constexpr inline int ceil(float x) noexcept;
-  constexpr inline int ceil(double x) noexcept;
-  constexpr inline int floor(float x) noexcept;
-  constexpr inline int floor(double x) noexcept;
 
   template<class T = decimal, Libra::error_if_not_decimal_bool<T> = true> constexpr inline T abs(T x) noexcept;
   template<class T = decimal, Libra::error_if_not_decimal_bool<T> = true> constexpr inline T sin(T x) noexcept;
@@ -76,13 +70,7 @@ namespace QtEx
   template<typename T> constexpr inline bool compare(T a, T b) noexcept { return a == b; }
   template<> constexpr inline bool compare<float>(float a, float b) noexcept { return (std::abs(a - b) * 100000.f <= std::min(std::abs(a), std::abs(b))); }
   template<> constexpr inline bool compare<double>(double a, double b) noexcept { return (std::abs(a - b) * 1000000000000. <= std::min(std::abs(a), std::abs(b))); }
-
   template<typename T> constexpr inline bool is_null(T a) noexcept { return compare<T>(0, a); }
-
-  constexpr inline int ceil(float x) noexcept { return static_cast<int>(std::ceil(x)); }
-  constexpr inline int ceil(double x) noexcept { return static_cast<int>(std::ceil(x)); }
-  constexpr inline int floor(float x) noexcept { return static_cast<int>(std::floor(x)); }
-  constexpr inline int floor(double x) noexcept { return static_cast<int>(std::floor(x)); }
 
   template<class T, Libra::error_if_not_decimal_bool<T>> constexpr inline T abs(T x) noexcept { return static_cast<T>(std::abs(x)); }
   template<class T, Libra::error_if_not_decimal_bool<T>> constexpr inline T sin(T x) noexcept { return static_cast<T>(std::sin(x)); }
