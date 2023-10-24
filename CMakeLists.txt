@@ -15,16 +15,6 @@ option(QTEX_NO_ELEVATION "Do not include QtEx Elevation in build" OFF)
 
 message(STATUS "[QtEx] Disable QtEx::Elevation: ${QTEX_NO_ELEVATION}")
 
-if(WIN32)
-    include(FetchContent)
-    FetchContent_Declare(
-      googletest
-      URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
-    )
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-    FetchContent_MakeAvailable(googletest)
-endif()
-
 if(NOT CMAKE_C_STANDARD)
     set(CMAKE_C_STANDARD 17)
     set(CMAKE_C_STANDARD_REQUIRED OFF)
@@ -41,6 +31,15 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 
 if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
+    if(WIN32)
+        include(FetchContent)
+        FetchContent_Declare(
+          googletest
+          URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+        )
+        set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+        FetchContent_MakeAvailable(googletest)
+    endif()
     find_package(GTest REQUIRED)
     enable_testing()
 endif()
