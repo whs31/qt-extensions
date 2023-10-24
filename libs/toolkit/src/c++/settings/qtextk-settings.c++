@@ -9,8 +9,8 @@
 namespace QtEx
 {
   auto Settings::get(ISettingsProvider* provider) -> Settings* { static Settings instance(provider); return &instance; }
-  Settings::Settings(ISettingsProvider* provider, Object* parent)
-    : Object(parent)
+  Settings::Settings(ISettingsProvider* provider, Qt::Object* parent)
+    : Qt::Object(parent)
     , m_io(provider)
   {
     if(provider == nullptr)

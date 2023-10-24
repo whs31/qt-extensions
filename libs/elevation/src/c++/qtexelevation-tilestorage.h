@@ -9,11 +9,13 @@
 #include <mutex>
 #include <QtCore/QString>
 #include <QtExCore/Global>
+#include <Libra/Expected>
 #include "qtexelevation-errorcodes.h"
 
 using std::map;
 using std::mutex;
 using std::unique_ptr;
+using Qt::String;
 
 namespace QtEx
 {

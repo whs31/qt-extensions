@@ -12,7 +12,7 @@
 
 namespace QtEx
 {
-  MonoJsonSettingsProvider::MonoJsonSettingsProvider(Object* parent) noexcept
+  MonoJsonSettingsProvider::MonoJsonSettingsProvider(Qt::Object* parent) noexcept
     : ISettingsProvider(parent)
     , m_filepath(QCoreApplication::applicationDirPath() + DEFAULT_FILEPATH)
     , m_fallback_file(DEFAULT_FALLBACK_RC_FILE)
@@ -20,7 +20,7 @@ namespace QtEx
     qRegisterMetaType<MonoJsonSettingsProvider*>("MonoJsonSettingsProvider*");
   }
 
-  MonoJsonSettingsProvider::MonoJsonSettingsProvider(String filepath, String fallback_file, Object* parent) noexcept
+  MonoJsonSettingsProvider::MonoJsonSettingsProvider(String filepath, String fallback_file, Qt::Object* parent) noexcept
     : ISettingsProvider(parent)
     , m_filepath(std::move(filepath))
     , m_fallback_file(std::move(fallback_file))

@@ -10,6 +10,7 @@
 #include <QtPositioning/QGeoCoordinate>
 #include <QtExCore/Global>
 #include <QtExGeo/Math>
+#include <Libra/Expected>
 #include "QtExElevation/Types"
 #include "qtexelevation-errorcodes.h"
 

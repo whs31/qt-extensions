@@ -19,8 +19,8 @@ namespace QtEx
     constexpr static const char* DEFAULT_FALLBACK_RC_FILE = ":/json/settings.json";
 
     public:
-      explicit MonoJsonSettingsProvider(Object* parent = nullptr) noexcept;
-      MonoJsonSettingsProvider(String filepath, String fallback_file, Object* parent = nullptr) noexcept;
+      explicit MonoJsonSettingsProvider(Qt::Object* parent = nullptr) noexcept;
+      MonoJsonSettingsProvider(String filepath, String fallback_file, Qt::Object* parent = nullptr) noexcept;
 
       [[nodiscard]] invokable QVariant read(const QString& key, const QString& fid = QString()) const noexcept override;
       void write(const String& key, const Variant& value, const String& fid = String()) noexcept override;

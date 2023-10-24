@@ -6,7 +6,11 @@
 
 #include <QtCore/QByteArray>
 #include <QtExCore/Global>
+#include <Libra/Expected>
 #include "qtexelevation-errorcodes.h"
+
+using Qt::ByteArray;
+using Qt::String;
 
 namespace QtEx
 {

@@ -12,7 +12,7 @@
 
 namespace QtEx
 {
-  class Settings : public Object
+  class Settings : public Qt::Object
   {
     Q_OBJECT
 
@@ -42,7 +42,7 @@ namespace QtEx
       void valueChanged(QString key, QString fid);
 
     private:
-      explicit Settings(ISettingsProvider* provider, Object* parent = nullptr);
+      explicit Settings(ISettingsProvider* provider, Qt::Object* parent = nullptr);
 
     private:
       ISettingsProvider* m_io;

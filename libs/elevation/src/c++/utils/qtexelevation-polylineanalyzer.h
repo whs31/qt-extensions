@@ -9,6 +9,7 @@
 #include <QtExCore/Global>
 #include <QtExGeo/Math>
 #include <QtExElevation/Types>
+#include <Libra/Expected>
 
 using std::vector;
 
@@ -51,12 +52,12 @@ Q_DECLARE_METATYPE(QtEx::PathAnalyzer::ErrorCode)
 
 namespace QtEx
 {
-  class PathAnalyzerAsync : public Object
+  class PathAnalyzerAsync : public Qt::Object
   {
     Q_OBJECT
 
     public:
-      explicit PathAnalyzerAsync(Object* parent) noexcept;
+      explicit PathAnalyzerAsync(Qt::Object* parent) noexcept;
 
       void checkTileStatus(const GeoPath& path);
       void checkForIntersection(const GeoPath& path);

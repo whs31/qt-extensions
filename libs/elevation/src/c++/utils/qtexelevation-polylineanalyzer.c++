@@ -167,8 +167,8 @@ namespace QtEx
     return ret;
   }
 
-  PathAnalyzerAsync::PathAnalyzerAsync(Object* parent) noexcept
-    : Object(parent)
+  PathAnalyzerAsync::PathAnalyzerAsync(Qt::Object* parent) noexcept
+    : Qt::Object(parent)
   {
     qRegisterMetaType<expected<bool, QtEx::PathAnalyzer::ErrorCode>>("expected<bool, QtEx::PathAnalyzer::ErrorCode>");
   }

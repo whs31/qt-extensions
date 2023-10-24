@@ -9,9 +9,12 @@
 #include <QtCore/QVariant>
 #include <QtExCore/Global>
 
+using Qt::String;
+using Qt::Variant;
+
 namespace QtEx
 {
-  class ISettingsProvider : public Object
+  class ISettingsProvider : public Qt::Object
   {
     Q_OBJECT
 
@@ -23,7 +26,7 @@ namespace QtEx
       virtual void save() const noexcept = 0;
 
     protected:
-      explicit ISettingsProvider(Object* parent = nullptr) noexcept;
+      explicit ISettingsProvider(Qt::Object* parent = nullptr) noexcept;
   };
 } // QtEx
 
@@ -32,7 +35,7 @@ Q_DECLARE_INTERFACE(QtEx::ISettingsProvider, "ISettingsProvider")
 
 namespace QtEx
 {
-  inline ISettingsProvider::ISettingsProvider(Object* parent) noexcept
-    : Object(parent)
+  inline ISettingsProvider::ISettingsProvider(Qt::Object* parent) noexcept
+    : Qt::Object(parent)
   {}
 } // QtEx

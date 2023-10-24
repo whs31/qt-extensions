@@ -23,9 +23,7 @@ namespace QtEx
     {
       std::lock_guard<std::mutex> lock(m_mutex);
       if(not m_storage.count(key))
-      {
         m_storage[key] = std::make_unique<Tile>(storagePath(), latitude, longitude);
-      }
     }
     return m_storage.count(key);
   }
