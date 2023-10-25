@@ -7,7 +7,7 @@
 #include <QtCore/QObject>
 #include <QtGui/QColor>
 #include <QtQml/qqml.h>
-#include <QtExCore/Global>
+#include <QtExtensions/Global>
 
 using Qt::Object;
 using Qt::String;

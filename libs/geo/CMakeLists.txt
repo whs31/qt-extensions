@@ -26,21 +26,21 @@ endif()
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
-find_package(Qt5 REQUIRED COMPONENTS Core Positioning Network)
+find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Positioning Network)
 
 enable_testing()
-include_directories(src/c++ include)
 
 file(GLOB_RECURSE QTEX_GEO src/c++/*)
 file(GLOB_RECURSE QTEX_GEO_INCLUDE include/*)
 
 set(SRC ${QTEX_GEO} ${QTEX_GEO_INCLUDE})
 add_library(${PROJECT_NAME} STATIC ${SRC})
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    Qt5::Core
-    Qt5::Positioning
-    Qt5::Network
+target_link_libraries(${PROJECT_NAME}
+  PRIVATE
+    Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::Positioning
+    Qt${QT_VERSION_MAJOR}::Network
     QtExCore
 )
-target_include_directories(${PROJECT_NAME} PUBLIC include src)
+target_include_directories(${PROJECT_NAME} PUBLIC include src/c++)

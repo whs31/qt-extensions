@@ -5,7 +5,7 @@
 #pragma once
 
 #include <QtQuick/QSGSimpleMaterial>
-#include "QtExScenegraph/Materials/State"
+#include <QtExtensionsScenegraph/Materials/State>
 
 namespace QtEx
 {

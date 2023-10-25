@@ -6,8 +6,8 @@
   */
 
 #include <Libra/Platform>
-#include <QtExCore/Test>
-#include <QtExCore/Logging>
+#include <QtExtensions/Test>
+#include <QtExtensions/Logging>
 
 declare_test_case(Libra, Platform)
   llog(Info) (int)Libra::Platform::os();

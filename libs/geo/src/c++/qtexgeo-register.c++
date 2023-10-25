@@ -4,8 +4,8 @@
 
 #include "qtexgeo-register.h"
 #include <QtQml/qqml.h>
-#include "QtExGeo/TileLoader"
-#include "QtExGeo/GoogleMapsProvider"
+#include <QtExtensionsGeo/TileLoader>
+#include <QtExtensionsGeo/GoogleMapsProvider>
 
 namespace QtEx
 {

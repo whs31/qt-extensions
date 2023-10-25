@@ -1,5 +1,5 @@
-#include <QtExCore/Test>
-#include <QtExCore/Math>
+#include <QtExtensions/Test>
+#include <QtExtensions/Math>
 
 #if defined(Q_OS_WIN)
 #include <QtCore/QtMath>

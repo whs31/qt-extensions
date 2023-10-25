@@ -1,9 +1,9 @@
 #include <QtCore/QPointF>
-#include <QtExCore/Test>
-#include <QtExCore/Global>
-#include <QtExCore/Math>
-#include <QtExCore/Logging>
-#include <QtExCore/Point2D>
+#include <QtExtensions/Test>
+#include <QtExtensions/Global>
+#include <QtExtensions/Math>
+#include <QtExtensions/Logging>
+#include <QtExtensions/Point2D>
 
 using namespace QtEx;
 

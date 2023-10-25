@@ -2,8 +2,8 @@
 // Created by whs31 on 02.10.23.
 //
 
-#include <QtExCore/Test>
-#include <QtExCore/Logging>
+#include <QtExtensions/Test>
+#include <QtExtensions/Logging>
 
 using namespace QtEx;
 

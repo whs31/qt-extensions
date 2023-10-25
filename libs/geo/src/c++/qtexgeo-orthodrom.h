@@ -6,8 +6,8 @@
 
 #include <QtCore/QVariantList>
 #include <QtPositioning/QGeoCoordinate>
-#include <QtExCore/Global>
-#include <QtExGeo/Math>
+#include <QtExtensions/Global>
+#include <QtExtensionsGeo/Math>
 
 using Qt::Variant;
 using Qt::GeoCoordinate;

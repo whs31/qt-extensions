@@ -1,7 +1,7 @@
 #include "qtexcore-point2d.h"
 #include <QtCore/QPointF>
 #include <QtCore/QDebug>
-#include "QtExCore/Math"
+#include <QtExtensions/Math>
 
 namespace QtEx
 {

@@ -6,7 +6,7 @@
 
 #include <queue>
 #include <QtCore/QObject>
-#include <QtExCore/Global>
+#include <QtExtensions/Global>
 
 using std::queue;
 

@@ -1,5 +1,5 @@
-#include <QtExCore/Test>
-#include <QtExCore/Global>
+#include <QtExtensions/Test>
+#include <QtExtensions/Global>
 #include <Libra/Expected>
 #include <range/v3/view/enumerate.hpp>
 

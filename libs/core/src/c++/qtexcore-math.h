@@ -4,7 +4,7 @@
 
 #include <cmath>
 #include <limits>
-#include "QtExCore/Global"
+#include <QtExtensions/Global>
 
 namespace QtEx
 {

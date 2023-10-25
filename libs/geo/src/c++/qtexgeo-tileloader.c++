@@ -10,9 +10,9 @@
 #include <QtNetwork/QNetworkReply>
 #include <QtPositioning/QGeoPolygon>
 #include <QtPositioning/QGeoRectangle>
-#include <QtExCore/Math>
-#include <QtExCore/Logging>
-#include <QtExGeo/Math>
+#include <QtExtensions/Math>
+#include <QtExtensions/Logging>
+#include <QtExtensionsGeo/Math>
 
 namespace QtEx
 {

@@ -5,8 +5,8 @@
 #include "qtexgeo-geomath.h"
 #include <QtCore/QPointF>
 #include <QtPositioning/QGeoCoordinate>
-#include <QtExCore/Math>
-#include <QtExCore/Logging>
+#include <QtExtensions/Math>
+#include <QtExtensions/Logging>
 
 constexpr const double MAP_SCALE_RATIO = 156'543.03392;
 constexpr const float EARTH_RADIUS = 6371000.f;

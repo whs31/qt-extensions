@@ -6,8 +6,7 @@
   */
 
 #include <QtCore/QCoreApplication>
-#include <QtExCore/Test>
-
+#include <QtExtensions/Test>
 declare_test_case(TestingCheck, GTestInitialised)
   pass_always
 end_test_case

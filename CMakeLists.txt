@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(QtEx
+project(QtExtensions
   VERSION 1.0.0
   DESCRIPTION "Qt Extensions Bundle"
   HOMEPAGE_URL "io.github.whs31"
@@ -10,10 +10,6 @@ project(QtEx
 if(TARGET ${PROJECT_NAME})
     return()
 endif()
-
-option(QTEX_NO_ELEVATION "Do not include QtEx Elevation in build" OFF)
-
-message(STATUS "[QtEx] Disable QtEx::Elevation: ${QTEX_NO_ELEVATION}")
 
 if(NOT CMAKE_C_STANDARD)
     set(CMAKE_C_STANDARD 17)
@@ -44,25 +40,14 @@ if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
     enable_testing()
 endif()
 
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
-find_package(Qt5 REQUIRED COMPONENTS Core Quick Location Positioning Network)
-
-if(QTEX_NO_ELEVATION)
-    message(STATUS "[QtEx] GDAL-dependent libraries will not be compiled.")
-else()
-    message(STATUS "[QtEx] GDAL included.")
-endif()
+find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick Location Positioning Network)
 
 add_subdirectory(libs/core)
 add_subdirectory(libs/geo)
-if(NOT QTEX_NO_ELEVATION)
-    add_subdirectory(libs/elevation)
-endif()
 add_subdirectory(libs/scenegraph)
-add_subdirectory(libs/toolkit)
-#add_subdirectory(libs/networking)
 set(QTEX_INCLUDES
-    include/QtEx/QtEx
+    include/QtExtensions/QtExtensions
     src/c++/qtex-register.c++
     src/c++/qtex-register.h
 )
@@ -70,32 +55,15 @@ set(QTEX_INCLUDES
 include_directories(include src/c++)
 add_library(${PROJECT_NAME} STATIC ${QTEX_INCLUDES})
 
-if(QTEX_NO_ELEVATION)
-    target_link_libraries(${PROJECT_NAME}
-      PRIVATE
-        Qt5::Core
-        Qt5::Quick
-      PUBLIC
-        QtExCore
-        QtExGeo
-        QtExScenegraph
-        QtExToolkit
-        #QtExNetworking
-    )
-else()
-    target_link_libraries(${PROJECT_NAME}
-      PRIVATE
-        Qt5::Core
-        Qt5::Quick
-      PUBLIC
-        QtExCore
-        QtExGeo
-        QtExElevation
-        QtExScenegraph
-        QtExToolkit
-        #QtExNetworking
-    )
-endif()
+target_link_libraries(${PROJECT_NAME}
+  PRIVATE
+      Qt${QT_VERSION_MAJOR}::Core
+      Qt${QT_VERSION_MAJOR}::Quick
+  PUBLIC
+      QtExCore
+      QtExGeo
+      QtExScenegraph
+)
 
 target_include_directories(${PROJECT_NAME} PUBLIC include src/c++)
 
@@ -104,33 +72,17 @@ if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
     message(NOTICE "-- [QtEx] Tests enabled")
     add_compile_definitions(QTEX_CORE_ENABLE_TESTS)
     add_executable(${PROJECT_NAME}-Test ${QTEX_INCLUDES} ${QTEX_TESTS})
-    if(QTEX_NO_ELEVATION)
-        target_link_libraries(${PROJECT_NAME}-Test PRIVATE
-          GTest::GTest
-          Qt5::Network
-          Qt5::Positioning
-          Qt5::Location
-          Qt5::Quick
-          Qt5::Core
-          QtExCore
-          QtExGeo
-          QtExScenegraph
-        )
-    else()
-        target_link_libraries(${PROJECT_NAME}-Test PRIVATE
-          GTest::GTest
-          Qt5::Network
-          Qt5::Positioning
-          Qt5::Location
-          Qt5::Quick
-          Qt5::Core
-          QtExCore
-          QtExGeo
-          QtExScenegraph
-        )
-    endif()
+    target_link_libraries(${PROJECT_NAME}-Test PRIVATE
+      GTest::GTest
+      Qt${QT_VERSION_MAJOR}::Network
+      Qt${QT_VERSION_MAJOR}::Positioning
+      Qt${QT_VERSION_MAJOR}::Location
+      Qt${QT_VERSION_MAJOR}::Quick
+      Qt${QT_VERSION_MAJOR}::Core
+      QtExCore
+      QtExGeo
+      QtExScenegraph
+    )
 else()
     message(STATUS "[QtEx] Tests disabled")
 endif()
-
-unset(QTEX_NO_ELEVATION CACHE)

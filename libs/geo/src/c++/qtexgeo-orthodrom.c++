@@ -3,7 +3,7 @@
 //
 
 #include "qtexgeo-orthodrom.h"
-#include <QtExCore/Math>
+#include <QtExtensions/Math>
 
 namespace QtEx
 {

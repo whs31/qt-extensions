@@ -6,7 +6,7 @@
 
 #include <QtQuick/QSGGeometry>
 #include <QtQuick/QSGGeometryNode>
-#include <QtExCore/Global>
+#include <QtExtensions/Global>
 
 using Qt::Color;
 

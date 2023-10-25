@@ -1,6 +1,6 @@
 #pragma once
 
-#include "QtExCore/Global"
+#include <QtExtensions/Global>
 
 namespace QtEx
 {

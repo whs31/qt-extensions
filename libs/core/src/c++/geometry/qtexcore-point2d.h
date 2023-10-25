@@ -1,7 +1,7 @@
 #pragma once
 
-#include "QtExCore/Global"
-#include "QtExCore/Point1D"
+#include <QtExtensions/Global>
+#include <QtExtensions/Point1D>
 
 class QPointF;
 class QDebug;

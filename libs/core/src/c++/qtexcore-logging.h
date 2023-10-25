@@ -7,7 +7,7 @@
 #include <string>
 #include <QtCore/QDebug>
 #include <QtCore/QString>
-#include "QtExCore/Global"
+#include <QtExtensions/Global>
 
 #define scope_information QtEx::Private::parseScopeInfo(Q_FUNC_INFO)
 #define scope_information_str std::string(scope_information)

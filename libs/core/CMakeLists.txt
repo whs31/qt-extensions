@@ -26,14 +26,13 @@ endif()
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
-find_package(Qt5 REQUIRED COMPONENTS Core Quick)
+find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick)
 
 set(LIBRA_QT_TYPEDEFS ON CACHE BOOL "Enable Qt-specific type aliases" FORCE)
 add_subdirectory(libs/libra)
 
 enable_testing()
-include_directories(src/c++ include)
 
 file(GLOB_RECURSE QTEX_CORE src/c++/*)
 file(GLOB_RECURSE QTEX_CORE_INCLUDE include/*)
@@ -42,12 +41,12 @@ set(SRC ${QTEX_CORE} ${QTEX_CORE_INCLUDE})
 add_library(${PROJECT_NAME} STATIC ${SRC})
 target_link_libraries(${PROJECT_NAME}
   PRIVATE
-    Qt5::Core
-    Qt5::Quick
+    Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::Quick
   PUBLIC
     Libra
 )
-target_include_directories(${PROJECT_NAME} PUBLIC include src)
+target_include_directories(${PROJECT_NAME} PUBLIC include src/c++)
 
 if(${QTEX_CORE_USE_DOUBLE})
     add_compile_definitions(QTEX_CORE_USE_DOUBLE)

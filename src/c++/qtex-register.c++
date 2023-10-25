@@ -4,7 +4,7 @@
 
 #include "qtex-register.h"
 #include <QtQml/qqml.h>
-#include <QtExScenegraph/QuickUtils>
+#include <QtExtensionsScenegraph/QuickUtils>
 
 namespace QtEx
 {

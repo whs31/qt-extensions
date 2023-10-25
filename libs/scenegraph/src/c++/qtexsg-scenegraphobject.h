@@ -5,7 +5,7 @@
 #pragma once
 
 #include <QtQuick/QQuickItem>
-#include <QtExCore/Global>
+#include <QtExtensions/Global>
 
 namespace QtEx
 {
