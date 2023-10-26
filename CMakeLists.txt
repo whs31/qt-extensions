@@ -69,7 +69,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC include src/c++)
 
 if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
     file(GLOB_RECURSE QTEX_TESTS tests/*)
-    message(NOTICE "-- [QtEx] Tests enabled")
+    message(NOTICE "-- [Qt Extensions] Tests enabled")
     add_compile_definitions(QTEX_CORE_ENABLE_TESTS)
     add_executable(${PROJECT_NAME}-Test ${QTEX_INCLUDES} ${QTEX_TESTS})
     target_link_libraries(${PROJECT_NAME}-Test PRIVATE
@@ -84,5 +84,5 @@ if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
       QtExScenegraph
     )
 else()
-    message(STATUS "[QtEx] Tests disabled")
+    message(STATUS "[Qt Extensions] Tests disabled")
 endif()
