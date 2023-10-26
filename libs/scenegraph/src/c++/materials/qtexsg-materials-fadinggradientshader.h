@@ -4,6 +4,8 @@
 
 #pragma once
 
+#if(QT_VERSION_MAJOR == 5)
+
 #include <QtQuick/QSGSimpleMaterial>
 #include <QtExtensionsScenegraph/Materials/State>
 
@@ -25,3 +27,5 @@ namespace QtEx
       int id_color;
   };
 } // QtEx
+
+#endif

@@ -4,6 +4,8 @@
 
 #include "qtexsg-materials-radialgradientshader.h"
 
+#if(QT_VERSION_MAJOR == 5)
+
 namespace QtEx
 {
   QSGMaterialShader* RadialGradientShader::createShader() { return new RadialGradientShader; }
@@ -39,3 +41,5 @@ namespace QtEx
   void RadialGradientShader::updateState(const State* state, const State*) { program()->setUniformValue(id_color, state->color); }
   void RadialGradientShader::resolveUniforms() { id_color = program()->uniformLocation("color"); }
 } // QtEx
+
+#endif

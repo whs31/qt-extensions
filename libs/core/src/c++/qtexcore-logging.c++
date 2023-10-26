@@ -4,6 +4,9 @@
 
 #include "qtexcore-logging.h"
 
+#if QT_VERSION_MAJOR >= 6
+#include <QtCore/QRegularExpression>
+#endif
 
 namespace QtEx
 {
@@ -42,7 +45,13 @@ namespace QtEx
 
   const char* Private::parseScopeInfo(const char* x) noexcept
   {
+    #if QT_VERSION_MAJOR <= 5
     QRegExp r(".* ([^\\s]*)\\(");
+    #else
+    QRegularExpression r(".* ([^\\s]*)\\(");
+    #endif
+
+    #if QT_VERSION_MAJOR <= 5
     r.lastIndexIn(x);
     return r.capturedTexts()
             .back()
@@ -51,5 +60,15 @@ namespace QtEx
             //.append("\t")
             .toLocal8Bit()
             .data();
+    #else
+    return r.match(x)
+            .capturedTexts()
+            .back()
+            .replace("::", Log::separator())
+            .append(":")
+            //.append("\t")
+            .toLocal8Bit()
+            .data();
+    #endif
   }
 } // QtEx

@@ -4,6 +4,8 @@
 
 #include "qtexsg-materials-fadinggradientshader.h"
 
+#if(QT_VERSION_MAJOR == 5)
+
 namespace QtEx
 {
   QSGMaterialShader* FadingGradientShader::createShader() { return new FadingGradientShader; }
@@ -38,3 +40,5 @@ namespace QtEx
   void FadingGradientShader::updateState(const State* state, const State*) { program()->setUniformValue(id_color, state->color); }
   void FadingGradientShader::resolveUniforms() { id_color = program()->uniformLocation("color"); }
 } // QtEx
+
+#endif
