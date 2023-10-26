@@ -6,5 +6,5 @@
 
 namespace QtEx::Geo
 {
-  [[maybe_unused]] void registerQml() noexcept;
+  [[deprecated("This method is deprecated. Use Qtx::registerTypes instead.")]] [[maybe_unused]] void registerQml() noexcept;
 } // QtEx

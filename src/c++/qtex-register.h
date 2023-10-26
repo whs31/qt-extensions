@@ -6,7 +6,7 @@
 
 namespace QtEx
 {
-  [[maybe_unused]] void registerTypes(const char* uri = "QtEx",
+  [[maybe_unused]] void registerTypes(const char* uri = "QtExtensions",
                                       int major = 1,
                                       int minor = 0) noexcept;
 } // QtEx
