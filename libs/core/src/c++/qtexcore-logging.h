@@ -9,15 +9,17 @@
 #include <QtCore/QString>
 #include <QtExtensions/Global>
 
-#define scope_information QtEx::Private::parseScopeInfo(Q_FUNC_INFO)
+#define scope_information Qtx::Private::parseScopeInfo(Q_FUNC_INFO)
 #define scope_information_str std::string(scope_information)
 #define scope_information_qstr String(scope_information)
 #define with_trace << scope_information <<
 
-#define llog(Mode) QtEx::Log::log(QtEx:: Mode) << scope_information <<
-#define llog_no_trace(Mode) QtEx::Log::log(QtEx:: Mode) <<
+#define llog(Mode) Qtx::Log::log(Qtx:: Mode) << scope_information <<
+#define llog_no_trace(Mode) Qtx::Log::log(Qtx:: Mode) <<
 
 using Qt::String;
+
+class QCoreApplication;
 
 namespace QtEx
 {
@@ -39,6 +41,11 @@ namespace QtEx
 
       static void setLoggingPattern() noexcept;
       static void setLoggingPattern(const String& pattern) noexcept;
+
+      static void linebreak() noexcept;
+      static void printPlatformInfo() noexcept;
+      static void printQtInfo() noexcept;
+      static void printApplicationInfo(QCoreApplication*) noexcept;
 
       [[nodiscard]] static String separator();
       static void setSeparator(const String&);
