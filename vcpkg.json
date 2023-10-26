@@ -1,10 +1,9 @@
 {
   "name" : "qtex",
   "version-string" : "1.0.0",
-  "dependencies" : [ {
-      "name" : "gtest"
-    },
-    {
-      "name" : "gdal"
-    }]
+  "dependencies" :
+  [
+    { "name" : "gtest"},
+    { "name" : "gdal" }
+  ]
 }

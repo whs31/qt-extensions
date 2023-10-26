@@ -1,7 +1,7 @@
 test:
   stage: test
   tags: [linux]
-  script: ./QtEx-Test --gtest_output=xml --platform linuxfb
+  script: ./QtExtensions-Test --gtest_output=xml --platform linuxfb
   artifacts:
     reports:
       junit: test_detail.xml
