@@ -5,7 +5,7 @@
 #pragma once
 
 #include <QtGui/QColor>
-#include "QtExCore/Global"
+#include <QtExtensions/Global>
 
 using Qt::Color;
 

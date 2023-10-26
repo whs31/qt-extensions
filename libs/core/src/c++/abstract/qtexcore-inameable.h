@@ -5,7 +5,7 @@
 #pragma once
 
 #include <QtCore/QString>
-#include "QtExCore/Global"
+#include <QtExtensions/Global>
 
 using Qt::String;
 
