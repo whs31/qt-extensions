@@ -1,2 +1,2 @@
-#include <QtExCore/Global>
+#include <QtExtensions/Global>
 #include "../../src/c++/qtex-register.h"
