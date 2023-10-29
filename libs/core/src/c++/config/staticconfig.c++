@@ -24,7 +24,7 @@ namespace QtEx
     : m_path(path)
     , m_fallback(fallback)
   {
-    this->create();
+    (void)this->create();
   }
 
   String StaticConfig::path() const { return m_path; }
@@ -75,7 +75,8 @@ namespace QtEx
     m_locker.lock();
     if(not m_values.count(key))
       return unexpected(ConfigError::InvalidKey);
-    return m_values.at(key);
+    auto ret = m_values.at(key);
     m_locker.unlock();
+    return ret;
   }
 } // QtEx
