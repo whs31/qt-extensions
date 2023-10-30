@@ -53,7 +53,7 @@ namespace QtEx
     if(not val.has_value())
     {
       llog(Error) "Failed to read key" << key;
-      return;
+      return Qt::Variant().value<T>();
     }
     return val.value().value<T>();
   }
