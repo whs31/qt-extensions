@@ -4,7 +4,8 @@
 
 #pragma once
 
-#if(QT_VERSION_MAJOR == 5)
+#include <QtCore/QtGlobal>
+#if (QT_VERSION <= QT_VERSION_CHECK(6, 0, 0))
 
 #include <QtQuick/QSGSimpleMaterial>
 #include <QtExtensionsScenegraph/Materials/State>
