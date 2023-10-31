@@ -36,6 +36,8 @@ namespace QtEx
       template<typename T>
       auto value(const Qt::String& key) const noexcept -> T;
 
+      void set(const Qt::String& key, const Qt::Variant& value) noexcept;
+
     private:
       mutable mutex m_locker;
       Qt::String m_path;

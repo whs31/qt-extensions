@@ -70,7 +70,14 @@ namespace QtEx
     return true;
   }
 
-  auto StaticConfig::value(const Qt::String& key) const noexcept -> expected<Qt::Variant, ConfigError>
+  void StaticConfig::set(const String& key, const Qt::Variant& value) noexcept
+  {
+    m_locker.lock();
+    m_values[key] = value;
+    m_locker.unlock();
+  }
+
+  auto StaticConfig::value(const String& key) const noexcept -> expected<Qt::Variant, ConfigError>
   {
     m_locker.lock();
     if(not m_values.count(key))
