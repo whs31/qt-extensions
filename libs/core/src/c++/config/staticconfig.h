@@ -24,6 +24,12 @@ namespace QtEx
         InvalidKey
       };
 
+      enum class SetMode
+      {
+        WriteToFile,
+        HoldInRAM
+      };
+
       StaticConfig();
       StaticConfig(Qt::String path, Qt::String fallback);
 
@@ -36,7 +42,8 @@ namespace QtEx
       template<typename T>
       auto value(const Qt::String& key) const noexcept -> T;
 
-      void set(const Qt::String& key, const Qt::Variant& value) noexcept;
+      void set(const Qt::String& key, const Qt::Variant& value, SetMode) noexcept;
+      void save() noexcept;
 
     private:
       mutable mutex m_locker;

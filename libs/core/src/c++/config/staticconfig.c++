@@ -8,6 +8,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
+#include <QtExtensions/Utility>
 
 using Qt::Directory;
 using Qt::File;
@@ -34,20 +35,8 @@ namespace QtEx
 
   auto StaticConfig::create() -> bool
   {
-    llog(Debug) "Looking for" << path();
-    auto dir_path = path().remove(QUrl(path()).fileName());
-    Directory directory(dir_path);
-    if(not directory.exists())
-    {
-      directory.mkpath(dir_path);
-      llog(Debug) "Created directory" << dir_path;
-    }
+    Utility::emplaceFile(path(), fallback(), Utility::EmplaceMode::OnlyIfMissing);
     File file(path());
-    if(not file.exists())
-    {
-      File::copy(fallback(), path());
-      llog(Debug) "Placed fallback file into folder";
-    }
     file.setPermissions(QFileDevice::ReadUser | QFileDevice::WriteUser);
     if(not file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -70,11 +59,29 @@ namespace QtEx
     return true;
   }
 
-  void StaticConfig::set(const String& key, const Qt::Variant& value) noexcept
+  void StaticConfig::set(const String& key, const Qt::Variant& value, SetMode mode) noexcept
   {
     m_locker.lock();
     m_values[key] = value;
+    if(mode == SetMode::WriteToFile)
+      this->save();
     m_locker.unlock();
+  }
+
+  void StaticConfig::save() noexcept
+  {
+    auto data = Qt::JsonDocument(Qt::JsonObject::fromVariantMap(QMap<String, Qt::Variant>(m_values)))
+                  .toJson(Qt::JsonDocument::JsonFormat::Indented);
+    File::remove(path());
+    File file(path());
+    if(not file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+      llog(Error) "Failed to open file for write:" << path();
+      return;
+    }
+    file.write(data);
+    file.close();
+    llog(Debug) "File saved:" << path();
   }
 
   auto StaticConfig::value(const String& key) const noexcept -> expected<Qt::Variant, ConfigError>
